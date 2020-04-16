@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
+import seaborn as sns
 import random
 
 def retrieve_data():
@@ -75,6 +76,7 @@ def build_polls(polls_df,start_date, end_date):
     state_abbreviations = get_states()
     polls_max_df["State"] = polls_max_df["State"].map(state_abbreviations)
 
+    
     polls_max_filtered_df = polls_max_df[(polls_max_df["Week"]>=start_date) & (polls_max_df["Week"]<=end_date)]
     polls_max_filtered_df = polls_max_filtered_df.sort_values(['State','Week'],ascending=False)
     polls_regrouped_df =polls_max_filtered_df.groupby(["State"]).agg({'candidate_name':['first'],'Votes':['first'],'Week':['first']}).reset_index()
@@ -86,7 +88,7 @@ def build_polls(polls_df,start_date, end_date):
     return polls_regrouped_df
 
 def generate_polls_mapped_z(polls_orgvotes_df, polls_zlist,polls_zarray):
-    candidate_list = list(polls_orgvotes_df["candidate_name"])
+    candidate_list = list((polls_orgvotes_df["candidate_name"]))
     mapped_z = []
     for x in range(0,len(candidate_list)):
         for y in range(0,len(polls_zlist)):
@@ -102,19 +104,22 @@ def build_polls_zarray(polls_orgvotes_df):
     polls_zlist = list(set(polls_zarray_builder))
 
     polls_zarray = []
-
+    candidate_num = 0
     for i in range(0,len(polls_zlist)):
         polls_zarray.append(i+1)
-    return polls_zarray, polls_zlist
+    candidate_num = len(polls_zarray)
+    return candidate_num,polls_zarray, polls_zlist
 
-def generate_polls_colors(lim_array):
+def generate_polls_colors(candidate_count):
     #Random color array based on number of candidates
     rgb = []
-    for a in range(0,len(lim_array)):
-        r = str(random.randint(0,255))
-        g = str(random.randint(0,255))
-        b = str(random.randint(0,255))
-        rgb.append([lim_array[a],"rgb" + "(" + r + ","+ g + "," + b + ")" ])
+    #for a in range(0,len(lim_array)):
+        #r = str(random.randint(0,255))
+        #g = str(random.randint(0,255))
+        #b = str(random.randint(0,255))
+        #rgb.append([lim_array[a],"rgb" + "(" + r + ","+ g + "," + b + ")" ])
+
+    rgb = sns.color_palette("Set2",candidate_count).as_hex()
     return rgb
 
 def build_polls_limits(polls_orgvotes_df,polls_zarray,mapped_z):
@@ -160,11 +165,12 @@ def create_parties_limits(parties_df,zarray):
 
 def draw_polls_trace(myFig, data, polls_orgvotes_df,mycolorscale):
     polls_orgvotes_df["Week String"] = polls_orgvotes_df["Week"].dt.strftime("%x")
-    endpts = list(np.linspace(1, 12, len(mycolorscale) - 1))
+    #endpts = list(np.linspace(1, 12, len(mycolorscale) - 1))
 
     event_data4 = go.Choropleth(
         autocolorscale=False,
-        colorscale= mycolorscale,
+        #colorscale= 'agsunset',
+        colorscale = mycolorscale,
         locations=polls_orgvotes_df['State'],  # DataFrame column with locations
         text=  polls_orgvotes_df["candidate_name"] +"<br>Date:" + polls_orgvotes_df["Week String"] +"<br>Votes:"+ round(polls_orgvotes_df["Votes"],0).astype(str),
         z=polls_orgvotes_df["Z Values"],
@@ -255,10 +261,10 @@ def draw_map(num, loc_tbl, cleaned_pivot, parties_df, zarray, polls_orgvotes_df)
     elif(num==4):
         data = []
         myFig = go.Figure()
-        polls_zarray, polls_zlist = build_polls_zarray(polls_orgvotes_df)
+        candidate_num,polls_zarray, polls_zlist = build_polls_zarray(polls_orgvotes_df)
         mapped_z = generate_polls_mapped_z(polls_orgvotes_df,polls_zlist,polls_zarray)
-        lim_array = build_polls_limits(polls_orgvotes_df,polls_zarray,mapped_z)
-        mycolorscale = generate_polls_colors(lim_array)
+        #lim_array = build_polls_limits(polls_orgvotes_df,polls_zarray,mapped_z)
+        mycolorscale = generate_polls_colors(candidate_num)
         displayFig, displayData = draw_polls_trace(myFig,data,polls_orgvotes_df,mycolorscale)
 
     return displayFig, displayData
