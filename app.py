@@ -56,7 +56,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 app.layout = html.Div([
     html.Div(children=[
-        html.Div(className='container',children=[
+    html.Div(className='container',children=[
             html.H1(children='Politcal Ad Spending on Google'),
 
 
