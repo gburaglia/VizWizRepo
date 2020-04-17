@@ -1,0 +1,204 @@
+body {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #eee;
+}
+.container {
+  width: 960px;
+  height: 400px;
+  position: relative;
+  padding-left: 10px;
+  padding-top: 10px;
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: inset 0px 0px 5px 1px #d1d1d1;
+}
+.container::after,
+.container::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -70px;
+
+  background: #eee;
+  box-shadow: 0px 0px 16px #d1d1d1;
+}
+.container::before {
+  width: 700px;
+  height: 600px;
+  top: -100px;
+  left: 85%;
+
+  border-radius: 45%;
+  animation: spin 13s infinite linear;
+}
+.container::after {
+  width: 800px;
+  height: 700px;
+  left: 90%;
+  display: flex;
+  position: absolute;
+  border-radius: 40%;
+  animation: spin 16s infinite linear;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.maintext {
+  display: block;
+  font-size: 1em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+.plotHolder {
+  position: relative;
+  left: 5%;
+  top: 12%;
+}
+.loading {
+  position: absolute;
+  padding-left: 30px;
+  height: 60px;
+  width: 300px;
+  padding-top: 225px;
+  background:  #bac6d4;
+  border-radius: 10%;
+}
+.loading .circle1 {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 0;
+  vertical-align: text-top;
+  color: white;
+  position: absolute;
+  background: #252a30;
+  border-radius: 100%;
+  animation-name: barometize;
+  animation-direction: normal;
+  animation-fill-mode:forwards;
+  animation-duration: 6s;
+  animation-iteration-count: 1;
+  transition:
+    background 0s 0s;
+}
+.loading .circle2 {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  text-align: center;
+  vertical-align: text-top;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 0;
+  color: white;
+  background: #252a30;
+  border-radius: 100%;
+  animation-name: barometize2;
+  animation-direction: normal;
+  animation-fill-mode:forwards;
+  animation-duration: 6s;
+  animation-iteration-count: 1;
+  transition:
+    background 0s 0s;
+}
+.loading .circle3 {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  text-align: center;
+  vertical-align: text-top;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 0;
+  color: white;
+  background: #252a30;
+  border-radius: 100%;
+  animation-name: barometize3;
+  animation-direction: normal;
+  animation-fill-mode:forwards;
+  animation-duration: 6s;
+  animation-iteration-count: 1;
+  transition:
+    background 0s 0s;
+}
+.loading .circle4 {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  text-align: center;
+  vertical-align: text-top;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 0;
+  color: white;
+  background: #252a30;
+  border-radius: 100%;
+  animation-name: barometize4;
+  animation-direction: normal;
+  animation-fill-mode:forwards;
+  animation-duration: 6s;
+  animation-iteration-count: 1;
+  transition:
+    background 0s 0s;
+}
+.loading .circle5 {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  text-align: center;
+  vertical-align: text-top;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 0;
+  color: white;
+  background: #252a30;
+  border-radius: 100%;
+  animation-name: barometize5;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-duration: 6s;
+  animation-iteration-count: 1;
+  transition:
+    background 0s 0s;
+}
+.loading .circle1:hover {
+  background: orange;
+}
+.loading .circle2:hover {
+  background: orange;
+}
+.loading .circle3:hover {
+  background: orange;
+}
+.loading .circle4:hover {
+  background: orange;
+}
+.loading .circle5:hover {
+  background: orange;
+}
+.loading .axis {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  background: grey;
+  border-radius: 100%;
+  border: solid 2px white;
+  animation-name: axisize;
+  animation-direction: normal;
+  animation-fill-mode:forwards;
+  animation-duration: 6s;
+  animation-iteration-count: 1;
+}

@@ -15,15 +15,15 @@ import plotly.graph_objects as go
 from functions import (retrieve_data, build_targ, get_states, build_loc, draw_loc_trace, draw_targ_trace, draw_parties_trace, build_parties, draw_polls_trace, create_parties_limits,
 build_polls, build_polls_zarray, build_polls_limits, generate_polls_mapped_z, generate_polls_colors, create_parties_limits, map_layout, draw_map)
 
+start_date= "1/03/2020"
+end_date = "2/17/2020"
+mynum=4
 loc_df, targ_df, parties_df, polls_df = retrieve_data()
 cleaned_pivot = build_targ(targ_df)
 loc_tbl = build_loc(loc_df)
 parties_df,zarray = build_parties(parties_df)
-polls_orgvotes_df = build_polls(polls_df)
+polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
 layout = map_layout()
-mynum=4
-start_date= "1/03/2020"
-end_date = "2/17/2020"
 
 app = dash.Dash(__name__)
 app.index_string = '''

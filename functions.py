@@ -48,7 +48,6 @@ def build_parties(parties_df):
     state_abbreviations = get_states()
     parties_df.index = parties_df.index.map(state_abbreviations)
 
-
     zarray = []
     for n in range(0,len(parties_df.index)):
 
@@ -76,7 +75,6 @@ def build_polls(polls_df,start_date, end_date):
     state_abbreviations = get_states()
     polls_max_df["State"] = polls_max_df["State"].map(state_abbreviations)
 
-    
     polls_max_filtered_df = polls_max_df[(polls_max_df["Week"]>=start_date) & (polls_max_df["Week"]<=end_date)]
     polls_max_filtered_df = polls_max_filtered_df.sort_values(['State','Week'],ascending=False)
     polls_regrouped_df =polls_max_filtered_df.groupby(["State"]).agg({'candidate_name':['first'],'Votes':['first'],'Week':['first']}).reset_index()
