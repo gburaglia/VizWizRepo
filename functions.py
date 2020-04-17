@@ -372,3 +372,14 @@ def draw_bars():
     myFig.update_layout(layout)
     myFig.add_trace(mydata)
     return myFig
+
+def get_bar_data(type, date_start, date_end):
+    if(type == "polling"):
+        
+    #filter polling data tto date Range
+    # aggregate and sort
+    # arrange
+        results = [4,2,1,3,5]
+    else:
+        results = [4,2,1,3,5]
+    return results
