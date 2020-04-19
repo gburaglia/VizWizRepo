@@ -13,7 +13,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 from functions import (retrieve_data, build_targ, get_states, build_loc, draw_loc_trace, draw_targ_trace, draw_parties_trace, build_parties, draw_polls_trace, create_parties_limits,
-build_polls, build_polls_zarray, build_polls_limits, generate_polls_mapped_z, generate_polls_colors, create_parties_limits, map_layout, draw_map)
+build_polls, build_polls_zarray, build_polls_limits, generate_polls_mapped_z, generate_polls_colors, create_parties_limits, map_layout, draw_map, get_bar_data)
 
 start_date= "1/03/2020"
 end_date = "2/17/2020"
@@ -55,17 +55,29 @@ app.layout = html.Div(children=[
     html.Div(className ='maintext', children='''
         Data is provided by Google Open Data and can be found on their BigQuery platform.
     '''),
+    html.Label('Select Bars'),
     dcc.Dropdown(id='bar_select',
         options=[
-            {'label': 'Polling', 'value': '1'},
-            {'label': 'Keywords', 'value': '2'},
+            {'label': 'Polling', 'value':'1'},
+            {'label': 'Keywords', 'value':'2'},
         ],
-        value='2'
+        value='1'
     ),
+    html.Div([
+        html.Label("Pick Date Range"),
+            dcc.DatePickerRange(
+                id='my-bar-date-picker-range',
+                min_date_allowed=datetime(1995, 8, 5),
+                max_date_allowed=datetime(2020, 9, 19),
+                start_date = datetime(2020,1,3).date(),
+                end_date=datetime(2020, 2, 17).date()
+            ),
+        html.Div(id='output-container-bar-date-picker-range')
+    ]),
     html.Div(className='container',children=[
         html.Div(className='plotHolder', children=[
             html.Div(id='loading', className='loading', children = [
-                html.Div(id='circle1', className='circle1',children=np.random.randint(20, size=1)),
+                html.Div(id='circle1'),
                 html.Div(id='circle2', className='circle2',children=np.random.randint(20, size=1)),
                 html.Div(id='circle3', className='circle3',children=np.random.randint(20, size=1)),
                 html.Div(id='circle4', className='circle4',children=np.random.randint(20, size=1)),
@@ -107,8 +119,7 @@ app.layout = html.Div(children=[
     Output('example-graph', 'figure'),
     [Input(component_id='map_select', component_property='value'),
     Input(component_id='my-date-picker-range', component_property='start_date'),
-    Input(component_id='my-date-picker-range', component_property='end_date'),
-    ]
+    Input(component_id='my-date-picker-range', component_property='end_date')]
 )
 def update_map(input_value,start_date,end_date):
     polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
@@ -117,6 +128,19 @@ def update_map(input_value,start_date,end_date):
     layout = map_layout()
     displayFig.update_layout(layout)
     return displayFig
+
+@app.callback(
+    Output(component_id = 'circle1', component_property = 'children'),
+    [Input(component_id='bar_select', component_property='value'),
+    Input(component_id='my-bar-date-picker-range', component_property='start_date'),
+    Input(component_id='my-bar-date-picker-range', component_property='end_date')]
+)
+def update_bar(input_value,start_date,end_date):
+    loc_df, targ_df, parties_df, polls_df = retrieve_data()
+    number = get_bar_data(input_value, start_date, end_date, polls_df)
+
+    return number
+
 # @app.callback(
 #     Output('cirlce1','c1Value')
 # )

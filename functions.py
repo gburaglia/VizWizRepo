@@ -379,7 +379,7 @@ def get_bar_data(type, date_start, date_end,polls_df):
     nums ={}
     #dictionary of names (candidates or keywords)
     names={}
-    if(type == "polling"):
+    if(type == 1):
         #filter polling data tto date Range
         # aggregate and sort
         # arrange
@@ -392,13 +392,14 @@ def get_bar_data(type, date_start, date_end,polls_df):
 
         #dictionary of polling numbers
         nums ={}
-        for n in range(1,6):
-            nums["num{0}".format(n)] = polls_count_df.iloc[n-1,1]
+        for n in range(1,5):
+            nums["num{}".format(n)] = polls_count_df.iloc[n-1,1]
 
         #dictionary of candidate names
         names={}
-        for c in range(1,6):
-            names["name{0}".format(c)] = polls_count_df.iloc[c-1,0]
+        for c in range(1,5):
+            names["name{}".format(c)] = polls_count_df.iloc[c-1,0]
     else:
         results = [4,2,1,3,5]
-    return nums, names
+    number=10
+    return 10
