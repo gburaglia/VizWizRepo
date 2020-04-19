@@ -77,13 +77,14 @@ def build_polls(polls_df,start_date, end_date):
 
     polls_max_filtered_df = polls_max_df[(polls_max_df["Week"]>=start_date) & (polls_max_df["Week"]<=end_date)]
     polls_max_filtered_df = polls_max_filtered_df.sort_values(['State','Week'],ascending=False)
+
     polls_regrouped_df =polls_max_filtered_df.groupby(["State"]).agg({'candidate_name':['first'],'Votes':['first'],'Week':['first']}).reset_index()
     polls_regrouped_df.columns=['State','candidate_name','Votes','Week']
 
     polls_regrouped_df
 
 
-    return polls_regrouped_df
+    return polls_max_filtered_df,polls_regrouped_df
 
 def generate_polls_mapped_z(polls_orgvotes_df, polls_zlist,polls_zarray):
     candidate_list = list((polls_orgvotes_df["candidate_name"]))
@@ -373,13 +374,31 @@ def draw_bars():
     myFig.add_trace(mydata)
     return myFig
 
-def get_bar_data(type, date_start, date_end):
+def get_bar_data(type, date_start, date_end,polls_df):
+    #dictionary of numbers(polling results or)
+    nums ={}
+    #dictionary of names (candidates or keywords)
+    names={}
     if(type == "polling"):
-        
-    #filter polling data tto date Range
-    # aggregate and sort
-    # arrange
-        results = [4,2,1,3,5]
+        #filter polling data tto date Range
+        # aggregate and sort
+        # arrange
+        polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
+
+        #Get top 5 candidates and number of states
+        polls_count_df = polls_max_filtered_df.groupby(['candidate_name']).agg({'State':['count']})
+        polls_count_df.columns=["State Count"]
+        polls_count_df = polls_count_df.sort_values(['State Count'],ascending=False).reset_index().head(5)
+
+        #dictionary of polling numbers
+        nums ={}
+        for n in range(1,6):
+            nums["num{0}".format(n)] = polls_count_df.iloc[n-1,1]
+
+        #dictionary of candidate names
+        names={}
+        for c in range(1,6):
+            names["name{0}".format(c)] = polls_count_df.iloc[c-1,0]
     else:
         results = [4,2,1,3,5]
-    return results
+    return nums, names

@@ -22,7 +22,7 @@ loc_df, targ_df, parties_df, polls_df = retrieve_data()
 cleaned_pivot = build_targ(targ_df)
 loc_tbl = build_loc(loc_df)
 parties_df,zarray = build_parties(parties_df)
-polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
+polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
 layout = map_layout()
 
 app = dash.Dash(__name__)
@@ -55,6 +55,13 @@ app.layout = html.Div(children=[
     html.Div(className ='maintext', children='''
         Data is provided by Google Open Data and can be found on their BigQuery platform.
     '''),
+    dcc.Dropdown(id='bar_select',
+        options=[
+            {'label': 'Polling', 'value': '1'},
+            {'label': 'Keywords', 'value': '2'},
+        ],
+        value='2'
+    ),
     html.Div(className='container',children=[
         html.Div(className='plotHolder', children=[
             html.Div(id='loading', className='loading', children = [
@@ -100,16 +107,16 @@ app.layout = html.Div(children=[
     Output('example-graph', 'figure'),
     [Input(component_id='map_select', component_property='value'),
     Input(component_id='my-date-picker-range', component_property='start_date'),
-    Input(component_id='my-date-picker-range', component_property='end_date')]
+    Input(component_id='my-date-picker-range', component_property='end_date'),
+    ]
 )
 def update_map(input_value,start_date,end_date):
-    polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
+    polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
     mynum=input_value
     displayFig, displayData = draw_map(mynum, loc_tbl, cleaned_pivot, parties_df, zarray, polls_orgvotes_df)
     layout = map_layout()
     displayFig.update_layout(layout)
     return displayFig
-
 # @app.callback(
 #     Output('cirlce1','c1Value')
 # )
