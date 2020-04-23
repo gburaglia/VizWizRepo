@@ -139,7 +139,7 @@ def update_bar(input_value,start_date,end_date):
     loc_df, targ_df, parties_df, polls_df = retrieve_data()
     number = get_bar_data(input_value, start_date, end_date, polls_df)
 
-    return number
+    return number[0]
 
 # @app.callback(
 #     Output('cirlce1','c1Value')
