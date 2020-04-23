@@ -376,7 +376,7 @@ def draw_bars():
 
 def get_bar_data(type, start_date, end_date,polls_df):
     #dictionary of numbers(polling results or)
-    nums ={}
+    nums =[]
     #dictionary of names (candidates or keywords)
     names={}
     num_arr = []
@@ -392,10 +392,17 @@ def get_bar_data(type, start_date, end_date,polls_df):
         polls_count_df.columns=["State Count"]
         polls_count_final_df = polls_count_df.sort_values(['State Count'],ascending=False).reset_index().head(5)
 
+        #num = polls_count_final_df.iloc[3,1]
+
         #dictionary of polling numbers
 
-        num = polls_count_final_df.iloc[2,1]
+        #for n in range(1,5):
+        for n in range(1,5):
+            nums[n] = polls_count_df.iloc[n-1,1]
+
+        #dictionary of candidate names
+
     else:
         results = [4,2,1,3,5]
 
-    return num
+    return nums[0]
