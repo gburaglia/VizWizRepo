@@ -375,11 +375,11 @@ def draw_bars():
     return myFig
 
 def get_bar_data(type, start_date, end_date,polls_df):
-    #dictionary of numbers(polling results or)
-    nums =[]
-    #dictionary of names (candidates or keywords)
-    names={}
-    num_arr = []
+    #list of numbers(polling results or)
+    nums_list =[]
+    #list of names (candidates or keywords)
+    names_list=[]
+
     type = 1
     if(type == 1):
         #filter polling data tto date Range
@@ -392,17 +392,18 @@ def get_bar_data(type, start_date, end_date,polls_df):
         polls_count_df.columns=["State Count"]
         polls_count_final_df = polls_count_df.sort_values(['State Count'],ascending=False).reset_index().head(5)
 
-        #num = polls_count_final_df.iloc[3,1]
 
-        #dictionary of polling numbers
 
-        #for n in range(1,5):
-        for n in range(1,5):
-            nums[n] = polls_count_df.iloc[n-1,1]
+        #list of polling numbers
+        for n in range(1,6):
+            nums_list.append(polls_count_final_df.iloc[n-1,1])
 
-        #dictionary of candidate names
+
+         #list of candidate names
+        for c in range(1,6):
+            names_list.append(polls_count_df.iloc[c-1,0])
 
     else:
         results = [4,2,1,3,5]
 
-    return nums[0]
+    return nums_list, names_list
