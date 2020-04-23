@@ -77,9 +77,9 @@ app.layout = html.Div(children=[
     html.Div(className='container',children=[
         html.Div(className='plotHolder', children=[
             html.Div(id='loading', className='loading', children = [
-                html.Div(id='circle1'),
+                html.Div(id='circle1',className='circle1',children =np.random.randint(20, size=1)),
                 html.Div(id='circle2',className='circle2',children =np.random.randint(20, size=1)),
-                html.Div(id='circle3', className='circle3',children=20),
+                html.Div(id='circle3', className='circle3',children=np.random.randint(20, size=1)),
                 html.Div(id='circle4', className='circle4',children=np.random.randint(20, size=1)),
                 html.Div(id='circle5', className='circle5',children=np.random.randint(20, size=1)),
                 html.Div(id='axis1', className='axis')
@@ -130,8 +130,11 @@ def update_map(input_value,start_date,end_date):
     return displayFig
 
 @app.callback(
-    [Output(component_id = 'circle2', component_property = 'children'),
-    Output(component_id = 'circle1', component_property = 'children')],
+    [Output(component_id = 'circle1', component_property = 'children'),
+    Output(component_id = 'circle2', component_property = 'children'),
+    Output(component_id = 'circle3', component_property = 'children'),
+    Output(component_id = 'circle4', component_property = 'children'),
+    Output(component_id = 'circle5', component_property = 'children')],
     [Input(component_id='bar_select', component_property='value'),
     Input(component_id='my-bar-date-picker-range', component_property='start_date'),
     Input(component_id='my-bar-date-picker-range', component_property='end_date')]
@@ -140,7 +143,7 @@ def update_bar(input_value,start_date,end_date):
     loc_df, targ_df, parties_df, polls_df = retrieve_data()
     numbers, names = get_bar_data(input_value, start_date, end_date, polls_df)
 
-    return numbers[3],numbers[4]
+    return numbers[3],numbers[1],numbers[0],numbers[2],numbers[4]
 
 # @app.callback(
 #     Output('cirlce1','c1Value')
