@@ -1,6 +1,7 @@
 
 import pandas as pd
 import numpy as np
+import plotly.express as px
 import plotly.graph_objects as go
 import seaborn as sns
 import random
@@ -207,28 +208,38 @@ def draw_targ_trace(myFig,data,cleaned_pivot):
     return myFig, data
 
 def draw_parties_trace(myFig,data,parties_df, zarray, SD_limit, LD_limit, C_limit, LR_limit, SR_limit):
-    event_data3 = go.Choropleth(
-    autocolorscale=False,
-    colorscale=[[0.0, 'rgb(4,21,59)'],
-                [SD_limit - 0.05, 'rgb(4,21,59)'],
-                [SD_limit, 'rgb(139,195,236)'],
-                [LD_limit- 0.05, 'rgb(139,195,236)'],
-                [LD_limit , 'rgb(193,200,209)'],
-                [C_limit - 0.05, 'rgb(193,200,209)'],
-                [C_limit, 'rgb(247,190,192)'],
-                [LR_limit - 0.05, 'rgb(247,190,192)'],
-                [LR_limit + 0.05, 'rgb(206,0,0)'],
-                [SR_limit, 'rgb(206,0,0)']],
-    locations=parties_df.index,  # DataFrame column with locations
-    text= parties_df['Classification'],
-    z= zarray,
-    hoverinfo= 'text + z + location',
-    locationmode = 'USA-states', # Set to plot as US States
+
+    myFig = px.choropleth(parties_df,  # Input Pandas DataFrame
+                    locations=parties_df.index,  # DataFrame column with locations
+                    color=parties_df["Classification"],  # DataFrame column with color values
+                    hover_name=parties_df["Classification"], # DataFrame column hover info
+                    locationmode = 'USA-states', # Set to plot as US States
+                    #color_discrete_sequence=px.colors.qualitative.G10,
+                   color_discrete_sequence=['rgb(4,21,59)','rgb(139,195,236)', 'rgb(193,200,209)', 'rgb(247,190,192)','rgb(206,0,0)'],
+                    )
+
+    #event_data3 = go.Choropleth(
+    #autocolorscale=False,
+    #colorscale=[[0.0, 'rgb(4,21,59)'],
+    #            [SD_limit - 0.05, 'rgb(4,21,59)'],
+    #            [SD_limit, 'rgb(139,195,236)'],
+    #            [LD_limit- 0.05, 'rgb(139,195,236)'],
+    #            [LD_limit , 'rgb(193,200,209)'],
+    #            [C_limit - 0.05, 'rgb(193,200,209)'],
+    #            [C_limit, 'rgb(247,190,192)'],
+    #            [LR_limit - 0.05, 'rgb(247,190,192)'],
+    #            [LR_limit + 0.05, 'rgb(206,0,0)'],
+    #            [SR_limit, 'rgb(206,0,0)']],
+    #locations=parties_df.index,  # DataFrame column with locations
+    #text= parties_df['Classification'],
+    #z= zarray,
+    #hoverinfo= 'text + z + location',
+    #locationmode = 'USA-states', # Set to plot as US States
     #visible=False,
-    showscale=False,
-    )
-    data.append(event_data3)
-    myFig.add_trace(event_data3)
+    #showscale=False,
+    #)
+    #data.append(event_data3)
+    #myFig.add_trace(event_data3)
     return myFig, data
 
 def map_layout():
@@ -239,6 +250,21 @@ def map_layout():
     font = dict(color = '#FFFFFF', size = 11),
     geo_scope='usa',
     dragmode = False,
+    showlegend=True,
+    legend=dict(
+        x=0.9,
+        y=0.5,
+        traceorder="normal",
+        font=dict(
+            family="sans-serif",
+            size=12,
+            color="black"
+        ),
+        bgcolor="LightSteelBlue",
+        bordercolor="Black",
+        borderwidth=2
+    )
+
     )
     return layout
 
