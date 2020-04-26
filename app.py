@@ -21,7 +21,7 @@ mynum=4
 loc_df, targ_df, parties_df, polls_df = retrieve_data()
 cleaned_pivot = build_targ(targ_df)
 loc_tbl = build_loc(loc_df)
-parties_df,zarray = build_parties(parties_df)
+parties_df, zarray = build_parties(parties_df)
 polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
 layout = map_layout()
 
@@ -77,11 +77,11 @@ app.layout = html.Div(children=[
     html.Div(className='container',children=[
         html.Div(className='plotHolder', children=[
             html.Div(id='loading', className='loading', children = [
-                html.Div(id='circle1',className='circle1',children =5),
+                html.Div(id='circle1',className='circle1',children =1),
                 html.Div(id='circle2',className='circle2',children =3),
-                html.Div(id='circle3', className='circle3',children=1),
-                html.Div(id='circle4', className='circle4',children=2),
-                html.Div(id='circle5', className='circle5',children=4),
+                html.Div(id='circle3', className='circle3',children=5),
+                html.Div(id='circle4', className='circle4',children=4),
+                html.Div(id='circle5', className='circle5',children=2),
                 html.Div(id='axis1', className='axis')
                 ]),
             ])
