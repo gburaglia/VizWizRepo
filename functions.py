@@ -11,8 +11,9 @@ def retrieve_data():
     targ_df = pd.read_csv('data/USTargetedSpend.csv', index_col=0)
     parties_df = pd.read_csv('data/PartyAffiliationByState.csv', index_col=0)
     polls_df = pd.read_csv('data/PresidentialPrimaryPolls.csv', index_col=False)
+    kwords = pd.read_csv('data/google-political-ads-top-keywords-history.csv')
 
-    return loc_df, targ_df, parties_df, polls_df
+    return loc_df, targ_df, parties_df, polls_df, kwords
 
 def splitListToRows(row,row_accumulator,target_column,separator):
     split_row = row[target_column].split(separator)
@@ -400,12 +401,14 @@ def draw_bars():
     myFig.add_trace(mydata)
     return myFig
 
-def get_bar_data(type, start_date, end_date, polls_df):
+def get_kword_summary(data):
+    return none
+
+def get_bar_data(type, start_date, end_date, polls_df, kwords):
     #list of numbers(polling results or)
     nums_list =[]
     #list of names (candidates or keywords)
     names_list=[]
-    type = 1
     if(type == 1):
         #filter polling data tto date Range
         # aggregate and sort

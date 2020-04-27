@@ -18,7 +18,7 @@ build_polls, build_polls_zarray, build_polls_limits, generate_polls_mapped_z, ge
 start_date= "1/03/2020"
 end_date = "2/17/2020"
 mynum=4
-loc_df, targ_df, parties_df, polls_df = retrieve_data()
+loc_df, targ_df, parties_df, polls_df, kwords = retrieve_data()
 cleaned_pivot = build_targ(targ_df)
 loc_tbl = build_loc(loc_df)
 parties_df,zarray = build_parties(parties_df)
@@ -149,8 +149,8 @@ def update_map(input_value,start_date,end_date):
     Input(component_id='my-bar-date-picker-range', component_property='end_date')]
 )
 def update_bar(input_value,start_date,end_date):
-    loc_df, targ_df, parties_df, polls_df = retrieve_data()
-    numbers, names = get_bar_data(input_value, start_date, end_date, polls_df)
+    #loc_df, targ_df, parties_df, polls_df = retrieve_data()
+    numbers, names = get_bar_data(input_value, start_date, end_date, polls_df, kwords)
 
     return numbers[3],numbers[1],numbers[0],numbers[2],numbers[4]
 
