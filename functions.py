@@ -197,27 +197,49 @@ def draw_polls_trace(myFig, data, polls_orgvotes_df,mycolorscale):
     return myFig,data
 
 def draw_loc_trace(myFig,data,loc_tbl):
-    event_data = go.Choropleth(
-        locations=loc_tbl.index,  # DataFrame column with locations
-        z=loc_tbl["Spend_USD"],  # DataFrame column with color values
-        hoverinfo='location+z', # DataFrame column hover info
-        locationmode = 'USA-states',
+    #event_data = go.Choropleth(
+    #    locations=loc_tbl.index,  # DataFrame column with locations
+    #    z=loc_tbl["Spend_USD"],  # DataFrame column with color values
+    #    hoverinfo='location+z', # DataFrame column hover info
+    #    locationmode = 'USA-states',
         #visible=False
+
+    myFig = px.choropleth(loc_tbl,
+                    locations=loc_tbl.index,  # DataFrame column with locations
+                    color=loc_tbl["Spend_USD"],
+                    locationmode = 'USA-states',
+                    color_continuous_scale='deep'
+                    )
+    myFig.update_traces(
+    hoverinfo = 'location+text+name+z',
+    hovertemplate = None
         )
-    myFig.add_trace(event_data)
-    data.append(event_data)
+    #myFig.add_trace(event_data)
+    #data.append(event_data)
     return myFig, data
 
 def draw_targ_trace(myFig,data,cleaned_pivot):
-    event_data2 = go.Choropleth(
-        locations=cleaned_pivot.index,  # DataFrame column with locations
-        z=cleaned_pivot["Ads_List"],  # DataFrame column with color values
-        hoverinfo='location+z', # DataFrame column hover info
-        locationmode = 'USA-states',
+    #event_data2 = go.Choropleth(
+    #    locations=cleaned_pivot.index,  # DataFrame column with locations
+    #    z=cleaned_pivot["Ads_List"],  # DataFrame column with color values
+    #    hoverinfo='location+z', # DataFrame column hover info
+    #    locationmode = 'USA-states',
         #visible=False
+    #    )
+    #myFig.add_trace(event_data2)
+    #data.append(event_data2)
+
+    myFig = px.choropleth(cleaned_pivot,
+                    locations=cleaned_pivot.index,  # DataFrame column with locations
+                    color=cleaned_pivot["Ads_List"],
+                    locationmode = 'USA-states',
+                    color_continuous_scale='dense'
+                    )
+    myFig.update_traces(
+    hoverinfo = 'location+text+name+z',
+    hovertemplate = None
         )
-    myFig.add_trace(event_data2)
-    data.append(event_data2)
+
     return myFig, data
 
 def draw_parties_trace(myFig,data,parties_df, zarray, SD_limit, LD_limit, C_limit, LR_limit, SR_limit):
@@ -277,7 +299,7 @@ def map_layout():
         ),
         bgcolor="LightSteelBlue",
         bordercolor="Black",
-        borderwidth=2
+        borderwidth=2,
 
     )
 
