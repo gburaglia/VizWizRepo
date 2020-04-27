@@ -203,10 +203,11 @@ def draw_loc_trace(myFig,data,loc_tbl):
     #    hoverinfo='location+z', # DataFrame column hover info
     #    locationmode = 'USA-states',
         #visible=False
+    loc_tbl = loc_tbl.rename(columns={"Spend_USD":"Spend in USD"})
 
     myFig = px.choropleth(loc_tbl,
                     locations=loc_tbl.index,  # DataFrame column with locations
-                    color=loc_tbl["Spend_USD"],
+                    color=loc_tbl["Spend in USD"],
                     locationmode = 'USA-states',
                     color_continuous_scale='deep'
                     )
@@ -216,6 +217,7 @@ def draw_loc_trace(myFig,data,loc_tbl):
         )
     #myFig.add_trace(event_data)
     #data.append(event_data)
+    myFig.update_layout(dragmode=False,geo_scope='usa')
     return myFig, data
 
 def draw_targ_trace(myFig,data,cleaned_pivot):
@@ -229,16 +231,19 @@ def draw_targ_trace(myFig,data,cleaned_pivot):
     #myFig.add_trace(event_data2)
     #data.append(event_data2)
 
+    cleaned_pivot = cleaned_pivot.rename(columns={"Ads_List":"Number of Ads"})
+
     myFig = px.choropleth(cleaned_pivot,
                     locations=cleaned_pivot.index,  # DataFrame column with locations
-                    color=cleaned_pivot["Ads_List"],
+                    color=cleaned_pivot["Number of Ads"],
                     locationmode = 'USA-states',
                     color_continuous_scale='dense'
                     )
     myFig.update_traces(
     hoverinfo = 'location+text+name+z',
-    hovertemplate = None
-        )
+    hovertemplate = None)
+    myFig.update_layout( dragmode=False, geo_scope='usa',)
+
 
     return myFig, data
 
@@ -321,14 +326,19 @@ def draw_map(num, loc_tbl, cleaned_pivot, parties_df, zarray, polls_orgvotes_df)
         myFig = go.Figure()
         SD_limit, LD_limit, C_limit, LR_limit, SR_limit = create_parties_limits(parties_df,zarray) #Limits for parties df
         displayFig, displayData = draw_parties_trace(myFig,data,parties_df,zarray,SD_limit, LD_limit, C_limit, LR_limit, SR_limit)
+        layout = map_layout()
+        displayFig.update_layout(layout)
     elif(num==4):
         data = []
         myFig = go.Figure()
         candidate_num,polls_zarray, polls_zlist = build_polls_zarray(polls_orgvotes_df)
         mapped_z = generate_polls_mapped_z(polls_orgvotes_df,polls_zlist,polls_zarray)
+
         #lim_array = build_polls_limits(polls_orgvotes_df,polls_zarray,mapped_z)
         mycolorscale = generate_polls_colors(candidate_num)
         displayFig, displayData = draw_polls_trace(myFig,data,polls_orgvotes_df,mycolorscale)
+        layout = map_layout()
+        displayFig.update_layout(layout)
 
     return displayFig, displayData
 

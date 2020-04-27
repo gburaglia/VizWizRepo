@@ -125,8 +125,7 @@ def update_map(input_value,start_date,end_date):
     polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
     mynum=input_value
     displayFig, displayData = draw_map(mynum, loc_tbl, cleaned_pivot, parties_df, zarray, polls_orgvotes_df)
-    layout = map_layout()
-    displayFig.update_layout(layout)
+    
     return displayFig
 
 @app.callback(
