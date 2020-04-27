@@ -177,7 +177,6 @@ def draw_polls_trace(myFig, data, polls_orgvotes_df,mycolorscale):
     hoverinfo = 'text + name + location',
     hovertemplate = None)
 
-
     #event_data4 = go.Choropleth(
     #    autocolorscale=False,
     #    #colorscale= 'agsunset',
@@ -242,7 +241,7 @@ def draw_targ_trace(myFig,data,cleaned_pivot):
     myFig.update_traces(
     hoverinfo = 'location+text+name+z',
     hovertemplate = None)
-    myFig.update_layout( dragmode=False, geo_scope='usa',)
+    myFig.update_layout(title= {'text':'Number of Targeted Ads'}, dragmode=False, geo_scope='usa',)
 
 
     return myFig, data
