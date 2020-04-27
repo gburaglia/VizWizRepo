@@ -400,35 +400,33 @@ def draw_bars():
     myFig.add_trace(mydata)
     return myFig
 
-def get_bar_data(type, start_date, end_date,polls_df):
+def get_bar_data(type, start_date, end_date, polls_df):
     #list of numbers(polling results or)
     nums_list =[]
     #list of names (candidates or keywords)
     names_list=[]
-
     type = 1
     if(type == 1):
         #filter polling data tto date Range
         # aggregate and sort
         # arrange
         polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
-
         #Get top 5 candidates and number of states
         polls_count_df = polls_max_filtered_df.groupby(['candidate_name']).agg({'State':['count']})
         polls_count_df.columns=["State Count"]
         polls_count_final_df = polls_count_df.sort_values(['State Count'],ascending=False).reset_index().head(5)
-
-
-
         #list of polling numbers
         for n in range(1,6):
-            nums_list.append(polls_count_final_df.iloc[n-1,1])
-
-
+            try:
+                nums_list.append(polls_count_final_df.iloc[n-1,1])
+            except:
+                nums_list.append(0)
          #list of candidate names
         for c in range(1,6):
-            names_list.append(polls_count_df.iloc[c-1,0])
-
+            try:
+                names_list.append(polls_count_df.iloc[c-1,0])
+            except:
+                names_list.append('')
     else:
         results = [4,2,1,3,5]
 

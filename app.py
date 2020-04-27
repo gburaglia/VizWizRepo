@@ -25,7 +25,9 @@ parties_df,zarray = build_parties(parties_df)
 polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
 layout = map_layout()
 
-app = dash.Dash(__name__)
+external_stylesheets=["https://codepen.io/chriddyp/pen/bWLwgP.css"]
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
 app.index_string = '''
 <!DOCTYPE html>
 <html>
@@ -55,36 +57,43 @@ app.layout = html.Div(children=[
     html.Div(className ='maintext', children='''
         Data is provided by Google Open Data and can be found on their BigQuery platform.
     '''),
-    html.Label('Select Bars'),
-    dcc.Dropdown(id='bar_select',
-        options=[
-            {'label': 'Polling', 'value':'1'},
-            {'label': 'Keywords', 'value':'2'},
-        ],
-        value='1'
-    ),
-    html.Div([
-        html.Label("Pick Date Range"),
-            dcc.DatePickerRange(
-                id='my-bar-date-picker-range',
-                min_date_allowed=datetime(1995, 8, 5),
-                max_date_allowed=datetime(2020, 9, 19),
-                start_date = datetime(2020,1,3).date(),
-                end_date=datetime(2020, 2, 17).date()
-            ),
-        html.Div(id='output-container-bar-date-picker-range')
-    ]),
+
     html.Div(className='container',children=[
-        html.Div(className='plotHolder', children=[
-            html.Div(id='loading', className='loading', children = [
-                html.Div(id='circle1',className='circle1',children =5),
-                html.Div(id='circle2',className='circle2',children =3),
-                html.Div(id='circle3', className='circle3',children=1),
-                html.Div(id='circle4', className='circle4',children=2),
-                html.Div(id='circle5', className='circle5',children=4),
-                html.Div(id='axis1', className='axis')
+    html.Div([
+        html.Div(className="barhalfA", children = [
+            html.Div(className='plotHolder', children=[
+                html.Div(id='loading', className='loading', children = [
+                    html.Div(id='circle1',className='circle1',children =5),
+                    html.Div(id='circle2',className='circle2',children =3),
+                    html.Div(id='circle3', className='circle3',children=1),
+                    html.Div(id='circle4', className='circle4',children=2),
+                    html.Div(id='circle5', className='circle5',children=4),
+                    html.Div(id='axis1', className='axis')
+                    ]),
+                ])
+            ]),
+            html.Div(className="barhalfB", children = [
+                html.Div([
+                    html.Label("Pick Date Range"),
+                    dcc.DatePickerRange(
+                        id='my-bar-date-picker-range',
+                        min_date_allowed=datetime(1995, 8, 5),
+                        max_date_allowed=datetime(2020, 9, 19),
+                        start_date = datetime(2020,1,3).date(),
+                        end_date=datetime(2020, 2, 17).date()
+                    ),
+                    html.Label('Select Bars'),
+                    dcc.Dropdown(id='bar_select',
+                        options=[
+                            {'label': 'Polling', 'value':'1'},
+                            {'label': 'Keywords', 'value':'2'},
+                        ],
+                        value='1'
+                    ),
+                    html.Div(id='output-container-bar-date-picker-range')
                 ]),
             ])
+            ],className="row")
         ]),
         html.Br(),
 
@@ -144,14 +153,6 @@ def update_bar(input_value,start_date,end_date):
     numbers, names = get_bar_data(input_value, start_date, end_date, polls_df)
 
     return numbers[3],numbers[1],numbers[0],numbers[2],numbers[4]
-
-# @app.callback(
-#     Output('cirlce1','c1Value')
-# )
-# def getC1Value():
-#     value = np.randint(0,20)
-#     return value
-
 
 if __name__ == '__main__':
     app.run_server(debug=True,port=3050)
