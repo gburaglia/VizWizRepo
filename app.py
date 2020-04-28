@@ -63,12 +63,18 @@ app.layout = html.Div(children=[
         html.Div(className="barhalfA", children = [
             html.Div(className='plotHolder', children=[
                 html.Div(id='loading', className='loading', children = [
-                    html.Div(id='circle1',className='circle1',children =5),
-                    html.Div(id='circle2',className='circle2',children =3),
+                    html.Div(id='circle1',className='circle1',children=5),
+                    html.Div(id='circle2',className='circle2',children=3),
                     html.Div(id='circle3', className='circle3',children=1),
                     html.Div(id='circle4', className='circle4',children=2),
                     html.Div(id='circle5', className='circle5',children=4),
-                    html.Div(id='axis1', className='axis')
+                    html.Div(id='axis1', className='axis'),
+                    html.Div(id='lab1',className='lab1',children=None),
+                    html.Div(id='lab2',className='lab2',children=None),
+                    html.Div(id='lab3', className='lab3',children=None),
+                    html.Div(id='lab4', className='lab4',children=None),
+                    html.Div(id='lab5', className='lab5',children=None),
+                    html.Div(id='barTitle', className='barTitle',children="Average Polling Score")
                     ]),
                 ])
             ]),
@@ -143,16 +149,53 @@ def update_map(input_value,start_date,end_date):
     Output(component_id = 'circle2', component_property = 'children'),
     Output(component_id = 'circle3', component_property = 'children'),
     Output(component_id = 'circle4', component_property = 'children'),
-    Output(component_id = 'circle5', component_property = 'children')],
+    Output(component_id = 'circle5', component_property = 'children'),
+    Output(component_id ='my-bar-date-picker-range', component_property='min_date_allowed'),
+    Output(component_id = 'my-bar-date-picker-range', component_property = 'max_date_allowed'),
+    Output(component_id = 'lab1', component_property = 'children'),
+    Output(component_id = 'lab2', component_property = 'children'),
+    Output(component_id = 'lab3', component_property = 'children'),
+    Output(component_id = 'lab4', component_property = 'children'),
+    Output(component_id = 'lab5', component_property = 'children'),
+    Output(component_id = 'barTitle', component_property = 'children')
+    ],
     [Input(component_id='bar_select', component_property='value'),
     Input(component_id='my-bar-date-picker-range', component_property='start_date'),
     Input(component_id='my-bar-date-picker-range', component_property='end_date')]
 )
 def update_bar(input_value,start_date,end_date):
     #loc_df, targ_df, parties_df, polls_df = retrieve_data()
-    numbers, names = get_bar_data(input_value, start_date, end_date, polls_df, kwords)
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
+    if int(input_value) == 1:
+        start_date_b = min(pd.to_datetime(polls_df['Week Beginning']))
+        end_date_b = max(pd.to_datetime(polls_df['Week Beginning']))
+        title = "Average Polling Score"
+        if start_date > end_date_b or end_date < start_date_b:
+            start_date = start_date_b
+            end_date = end_date_b
+        elif start_date < start_date_b:
+            start_date = start_date_b
+        elif end_date > end_date_b:
+            end_date = end_date_b
 
-    return numbers[3],numbers[1],numbers[0],numbers[2],numbers[4]
+    else:
+        kwords['Report_Date'] = pd.to_datetime(kwords['Report_Date'])
+        start_date_b = min(kwords.Report_Date)
+        end_date_b = max(kwords.Report_Date)
+        title = "Total Keyword Ad Spend in Millions"
+        if start_date > end_date_b or end_date < start_date_b:
+            start_date = start_date_b
+            end_date = end_date_b
+        elif start_date < start_date_b:
+            start_date = start_date_b
+        elif end_date > end_date_b:
+            end_date = end_date_b
+
+    numbers, names = get_bar_data(int(input_value), start_date, end_date, polls_df, kwords)
+    #min_date_allowed, max_date_allowed
+
+    return numbers[3],numbers[1],numbers[0],numbers[2],numbers[4], start_date_b, end_date_b, names[3], names[1], names[0], names[2], names[4], title
 
 if __name__ == '__main__':
     app.run_server(debug=True,port=3050)

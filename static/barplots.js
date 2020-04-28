@@ -7,6 +7,14 @@ function update_bars(evnt){
   var c4 = document.getElementById('circle4').innerHTML;
   var c5 = document.getElementById('circle5').innerHTML;
 
+  var lab1 = document.querySelector('.lab1');
+  var lab2 = document.querySelector('.lab2');
+  var lab3 = document.querySelector('.lab3');
+  var lab4 = document.querySelector('.lab4');
+  var lab5 = document.querySelector('.lab5');
+  var barTitle = document.getElementById('.barTitle')
+
+
   var maxC = Math.max(c1,c2,c3,c4,c5);
 
   function barHeight(bar) {
@@ -237,6 +245,31 @@ function update_bars(evnt){
     }
   `);
 
+  lab1.style['visibility'] = 'visible';
+  lab1.style['opacity'] = 1;
+  lab1.style['transition'] = 'opacity 2s linear';
+  lab1.style['transition-delay'] = '4s';
+
+  lab2.style['visibility'] = 'visible';
+  lab2.style['opacity'] = 1;
+  lab2.style['transition'] = 'opacity 2s linear';
+  lab2.style['transition-delay'] = '4s';
+
+  lab3.style['visibility'] = 'visible';
+  lab3.style['opacity'] = 1;
+  lab3.style['transition'] = 'opacity 2s linear';
+  lab3.style['transition-delay'] = '4s';
+
+  lab4.style['visibility'] = 'visible';
+  lab4.style['opacity'] = 1;
+  lab4.style['transition'] = 'opacity 2s linear';
+  lab4.style['transition-delay'] = '4s';
+
+  lab5.style['visibility'] = 'visible';
+  lab5.style['opacity'] = 1;
+  lab5.style['transition'] = 'opacity 2s linear';
+  lab5.style['transition-delay'] = '4s';
+
   objc1.style['animation-name'] = 'barometize';
   objc2.style['animation-name'] = 'barometize2';
   objc3.style['animation-name'] = 'barometize3';
@@ -415,6 +448,38 @@ setTimeout(function(){
       100% { height: 0px; width: 285px; background: white; left: 20px; transform: translate(0%, 0%); border-color: transparent; border-radius: 0; }
     }
   `);
+
+  var lab1 = document.querySelector('.lab1');
+  var lab2 = document.querySelector('.lab2');
+  var lab3 = document.querySelector('.lab3');
+  var lab4 = document.querySelector('.lab4');
+  var lab5 = document.querySelector('.lab5');
+  var barTitle = document.getElementById('.barTitle')
+
+  lab1.style['visibility'] = 'visible';
+  lab1.style['opacity'] = 1;
+  lab1.style['transition'] = 'opacity 2s linear';
+  lab1.style['transition-delay'] = '4s';
+
+  lab2.style['visibility'] = 'visible';
+  lab2.style['opacity'] = 1;
+  lab2.style['transition'] = 'opacity 2s linear';
+  lab2.style['transition-delay'] = '4s';
+
+  lab3.style['visibility'] = 'visible';
+  lab3.style['opacity'] = 1;
+  lab3.style['transition'] = 'opacity 2s linear';
+  lab3.style['transition-delay'] = '4s';
+
+  lab4.style['visibility'] = 'visible';
+  lab4.style['opacity'] = 1;
+  lab4.style['transition'] = 'opacity 2s linear';
+  lab4.style['transition-delay'] = '4s';
+
+  lab5.style['visibility'] = 'visible';
+  lab5.style['opacity'] = 1;
+  lab5.style['transition'] = 'opacity 2s linear';
+  lab5.style['transition-delay'] = '4s';
 
   objc1.style['animation-name'] = 'barometize';
   objc2.style['animation-name'] = 'barometize2';
