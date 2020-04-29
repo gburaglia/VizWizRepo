@@ -86,7 +86,8 @@ app.layout = html.Div(children=[
                         min_date_allowed=datetime(1995, 8, 5),
                         max_date_allowed=datetime(2020, 9, 19),
                         start_date = datetime(2020,1,3).date(),
-                        end_date=datetime(2020, 2, 17).date()
+                        end_date=datetime(2020, 2, 17).date(),
+                        minimum_nights = 7
                     ),
                     html.Label('Select Bars'),
                     dcc.Dropdown(id='bar_select',

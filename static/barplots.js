@@ -7,14 +7,6 @@ function update_bars(evnt){
   var c4 = document.getElementById('circle4').innerHTML;
   var c5 = document.getElementById('circle5').innerHTML;
 
-  var lab1 = document.querySelector('.lab1');
-  var lab2 = document.querySelector('.lab2');
-  var lab3 = document.querySelector('.lab3');
-  var lab4 = document.querySelector('.lab4');
-  var lab5 = document.querySelector('.lab5');
-  var barTitle = document.getElementById('.barTitle')
-
-
   var maxC = Math.max(c1,c2,c3,c4,c5);
 
   function barHeight(bar) {
@@ -245,37 +237,66 @@ function update_bars(evnt){
     }
   `);
 
-  lab1.style['visibility'] = 'visible';
-  lab1.style['opacity'] = 1;
-  lab1.style['transition'] = 'opacity 2s linear';
-  lab1.style['transition-delay'] = '4s';
-
-  lab2.style['visibility'] = 'visible';
-  lab2.style['opacity'] = 1;
-  lab2.style['transition'] = 'opacity 2s linear';
-  lab2.style['transition-delay'] = '4s';
-
-  lab3.style['visibility'] = 'visible';
-  lab3.style['opacity'] = 1;
-  lab3.style['transition'] = 'opacity 2s linear';
-  lab3.style['transition-delay'] = '4s';
-
-  lab4.style['visibility'] = 'visible';
-  lab4.style['opacity'] = 1;
-  lab4.style['transition'] = 'opacity 2s linear';
-  lab4.style['transition-delay'] = '4s';
-
-  lab5.style['visibility'] = 'visible';
-  lab5.style['opacity'] = 1;
-  lab5.style['transition'] = 'opacity 2s linear';
-  lab5.style['transition-delay'] = '4s';
-
   objc1.style['animation-name'] = 'barometize';
   objc2.style['animation-name'] = 'barometize2';
   objc3.style['animation-name'] = 'barometize3';
   objc4.style['animation-name'] = 'barometize4';
   objc5.style['animation-name'] = 'barometize5';
   axis.style['animation-name'] = 'axisize';
+
+};
+
+function update_labs(evnt){
+  var lab1 = document.querySelector('.lab1');
+  var lab2 = document.querySelector('.lab2');
+  var lab3 = document.querySelector('.lab3');
+  var lab4 = document.querySelector('.lab4');
+  var lab5 = document.querySelector('.lab5');
+  // Call the first batch of updates
+  lab1.style.transition = "none";
+  lab1.style['opacity'] = 0;
+  // Force the browser recalculate the styles
+  lab1.offsetHeight;
+  lab1.style.transition = null;
+  lab1.style['opacity'] = 1;
+  lab1.style['transition'] = 'opacity 2s linear';
+  lab1.style['transition-delay'] = '4s';
+  // Call the first batch of updates
+  lab2.style.transition = "none";
+  lab2.style['opacity'] = 0;
+  // Force the browser recalculate the styles
+  lab2.offsetHeight;
+  lab2.style.transition = null;
+  lab2.style['opacity'] = 1;
+  lab2.style['transition'] = 'opacity 2s linear';
+  lab2.style['transition-delay'] = '4s';
+  // Call the first batch of updates
+  lab3.style.transition = "none";
+  lab3.style['opacity'] = 0;
+  // Force the browser recalculate the styles
+  lab3.offsetHeight;
+  lab3.style.transition = null;
+  lab3.style['opacity'] = 1;
+  lab3.style['transition'] = 'opacity 2s linear';
+  lab3.style['transition-delay'] = '4s';
+  // Call the first batch of updates
+  lab4.style.transition = "none";
+  lab4.style['opacity'] = 0;
+  // Force the browser recalculate the styles
+  lab4.offsetHeight;
+  lab4.style.transition = null;
+  lab4.style['opacity'] = 1;
+  lab4.style['transition'] = 'opacity 2s linear';
+  lab4.style['transition-delay'] = '4s';
+  // Call the first batch of updates
+  lab5.style.transition = "none";
+  lab5.style['opacity'] = 0;
+  // Force the browser recalculate the styles
+  lab5.offsetHeight;
+  lab5.style.transition = null;
+  lab5.style['opacity'] = 1;
+  lab5.style['transition'] = 'opacity 2s linear';
+  lab5.style['transition-delay'] = '4s';
 
 };
 
@@ -456,27 +477,22 @@ setTimeout(function(){
   var lab5 = document.querySelector('.lab5');
   var barTitle = document.getElementById('.barTitle')
 
-  lab1.style['visibility'] = 'visible';
   lab1.style['opacity'] = 1;
   lab1.style['transition'] = 'opacity 2s linear';
   lab1.style['transition-delay'] = '4s';
 
-  lab2.style['visibility'] = 'visible';
   lab2.style['opacity'] = 1;
   lab2.style['transition'] = 'opacity 2s linear';
   lab2.style['transition-delay'] = '4s';
 
-  lab3.style['visibility'] = 'visible';
   lab3.style['opacity'] = 1;
   lab3.style['transition'] = 'opacity 2s linear';
   lab3.style['transition-delay'] = '4s';
 
-  lab4.style['visibility'] = 'visible';
   lab4.style['opacity'] = 1;
   lab4.style['transition'] = 'opacity 2s linear';
   lab4.style['transition-delay'] = '4s';
 
-  lab5.style['visibility'] = 'visible';
   lab5.style['opacity'] = 1;
   lab5.style['transition'] = 'opacity 2s linear';
   lab5.style['transition-delay'] = '4s';
@@ -496,18 +512,111 @@ setTimeout(function(){
 
   dateChange.addEventListener("DOMCharacterDataModified", function (evt) {
       update_bars(evt);
+      update_labs(evt);
   }, false);
   dateChange2.addEventListener("DOMCharacterDataModified", function (evt) {
       update_bars(evt);
+      update_labs(evt);
   }, false);
   dateChange3.addEventListener("DOMCharacterDataModified", function (evt) {
       update_bars(evt);
+      update_labs(evt);
   }, false);
   dateChange4.addEventListener("DOMCharacterDataModified", function (evt) {
       update_bars(evt);
+      update_labs(evt);
   }, false);
   dateChange5.addEventListener("DOMCharacterDataModified", function (evt) {
       update_bars(evt);
+      update_labs(evt);
   }, false);
 
-}, 3500);
+  // lab1.addEventListener("DOMCharacterDataModified", function (evt) {
+  //   // Call the first batch of updates
+  //   lab1.style.transition = "none";
+  //   lab1.style['opacity'] = 0;
+  //   // Force the browser recalculate the styles
+  //   lab1.offsetHeight;
+  //   lab1.style.transition = null;
+  //   lab1.style['opacity'] = 1;
+  //   lab1.style['transition'] = 'opacity 2s linear';
+  //   lab1.style['transition-delay'] = '4s';
+  // }, false);
+  //
+  // lab2.addEventListener("DOMCharacterDataModified", function (evt) {
+  //   // Call the first batch of updates
+  //   lab2.style.transition = "none";
+  //   lab2.style['opacity'] = 0;
+  //   // Force the browser recalculate the styles
+  //   lab2.offsetHeight;
+  //   lab2.style.transition = null;
+  //   lab2.style['opacity'] = 1;
+  //   lab2.style['transition'] = 'opacity 2s linear';
+  //   lab2.style['transition-delay'] = '4s';
+  // }, false);
+  //
+  // lab3.addEventListener("DOMCharacterDataModified", function (evt) {
+  //   // Call the first batch of updates
+  //   lab2.style.transition = "none";
+  //   lab2.style['opacity'] = 0;
+  //   // Force the browser recalculate the styles
+  //   lab2.offsetHeight;
+  //   lab2.style.transition = null;
+  //   lab2.style['opacity'] = 1;
+  //   lab2.style['transition'] = 'opacity 2s linear';
+  //   lab2.style['transition-delay'] = '4s';
+  //   // Call the first batch of updates
+  //   lab3.style.transition = "none";
+  //   lab3.style['opacity'] = 0;
+  //   // Force the browser recalculate the styles
+  //   lab3.offsetHeight;
+  //   lab3.style.transition = null;
+  //   lab3.style['opacity'] = 1;
+  //   lab3.style['transition'] = 'opacity 2s linear';
+  //   lab3.style['transition-delay'] = '4s';
+  //   // Call the first batch of updates
+  //   lab4.style.transition = "none";
+  //   lab4.style['opacity'] = 0;
+  //   // Force the browser recalculate the styles
+  //   lab4.offsetHeight;
+  //   lab4.style.transition = null;
+  //   lab4.style['opacity'] = 1;
+  //   lab4.style['transition'] = 'opacity 2s linear';
+  //   lab4.style['transition-delay'] = '4s';
+  //   // Call the first batch of updates
+  //   lab5.style.transition = "none";
+  //   lab5.style['opacity'] = 0;
+  //   // Force the browser recalculate the styles
+  //   lab5.offsetHeight;
+  //   lab5.style.transition = null;
+  //   lab5.style['opacity'] = 1;
+  //   lab5.style['transition'] = 'opacity 2s linear';
+  //   lab5.style['transition-delay'] = '4s';
+  // }, false);
+  //
+  // lab4.addEventListener("DOMCharacterDataModified", function (evt) {
+  //   // Call the first batch of updates
+  //   lab4.style.transition = "none";
+  //   lab4.style['opacity'] = 0;
+  //   // Force the browser recalculate the styles
+  //   lab4.offsetHeight;
+  //   lab4.style.transition = null;
+  //   lab4.style['opacity'] = 1;
+  //   lab4.style['transition'] = 'opacity 2s linear';
+  //   lab4.style['transition-delay'] = '4s';
+  // }, false);
+  //
+  // lab5.addEventListener("DOMCharacterDataModified", function (evt) {
+  //   // Call the first batch of updates
+  //   lab5.style.transition = "none";
+  //   lab5.style['opacity'] = 0;
+  //   // Force the browser recalculate the styles
+  //   lab5.offsetHeight;
+  //   lab5.style.transition = null;
+  //   lab5.style['opacity'] = 1;
+  //   lab5.style['transition'] = 'opacity 2s linear';
+  //   lab5.style['transition-delay'] = '4s';
+  // }, false);
+
+
+}, 2000);
