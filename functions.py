@@ -65,7 +65,13 @@ def build_parties(parties_df):
             zarray.append(5.0)
     return parties_df,zarray
 
-def build_polls(polls_df,start_date, end_date):
+def build_polls(polls_df,start_date, end_date,poll_type=None):
+
+    if poll_type != None:
+        if int(poll_type) == 1:
+            polls_df = polls_df[polls_df.party == 'DEM']
+        elif int(poll_type) == 2:
+            polls_df = polls_df[polls_df.party == 'REP']
 
     polls_df["State-Week"] = polls_df["state"] + "," + polls_df['Week Beginning']
     polls_grouped_df = polls_df.groupby(["State-Week",'candidate_name']).agg({'People Voting':['sum'],'state':['first'],'Week Beginning':['first']})
@@ -401,6 +407,27 @@ def draw_bars():
     myFig.add_trace(mydata)
     return myFig
 
+def build_poll_ratings(polls_df,start_date, end_date, poll_type=None):
+
+    if poll_type != None:
+        if int(poll_type) == 1:
+            polls_df = polls_df[polls_df.party == 'DEM']
+        elif int(poll_type) == 2:
+            polls_df = polls_df[polls_df.party == 'REP']
+
+    polls_df['Week Beginning'] = pd.to_datetime(polls_df['Week Beginning'])
+    polls_df = polls_df[polls_df['Week Beginning'] >= start_date]
+    polls_df = polls_df[polls_df['Week Beginning'] <= end_date]
+    polls_summary = polls_df.groupby('candidate_name').agg({'People Voting':['sum']})
+    total = sum(polls_df['People Voting'])
+    polls_summary['Vote Share'] = (polls_summary['People Voting'] / total) * 100
+    polls_summary = polls_summary.round(2)
+    polls_summary = polls_summary.sort_values(['Vote Share'],ascending=False).reset_index().head(5)
+    names_list = [polls_summary.candidate_name[0], polls_summary.candidate_name[1], polls_summary.candidate_name[2], polls_summary.candidate_name[3], polls_summary.candidate_name[4]]
+    nums_list = [polls_summary['Vote Share'][0], polls_summary['Vote Share'][1], polls_summary['Vote Share'][2], polls_summary['Vote Share'][3], polls_summary['Vote Share'][4]]
+
+    return names_list, nums_list
+
 def update_keywords(name, value, kw_stats):
     if name in kw_stats:
         kw_stats[name] = kw_stats[name] + value
@@ -409,7 +436,7 @@ def update_keywords(name, value, kw_stats):
 
     return kw_stats
 
-def get_bar_data(type, start_date, end_date, polls_df, kwords):
+def get_bar_data(type, start_date, end_date, polls_df, kwords, poll_type):
     #list of numbers(polling results or)
     nums_list =[]
     #list of names (candidates or keywords)
@@ -418,7 +445,7 @@ def get_bar_data(type, start_date, end_date, polls_df, kwords):
         #filter polling data tto date Range
         # aggregate and sort
         # arrange
-        polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
+        polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date, poll_type)
         #Get top 5 candidates and number of states
         polls_count_df = polls_max_filtered_df.groupby(['candidate_name']).agg({'State':['count']})
         polls_count_df.columns=["State Count"]
@@ -435,7 +462,7 @@ def get_bar_data(type, start_date, end_date, polls_df, kwords):
                 names_list.append(polls_count_df.index[c-1])
             except:
                 names_list.append('')
-    else:
+    elif type == 2:
         kwords['Report_Date'] = pd.to_datetime(kwords['Report_Date'])
         kw = kwords[(kwords.Report_Date >= start_date) & (kwords.Report_Date < end_date)]
         kw_stats = {}
@@ -475,5 +502,8 @@ def get_bar_data(type, start_date, end_date, polls_df, kwords):
         nums_list.append(float('{0:.2f}'.format(list(kw_stats.values())[2]/1000000)))
         nums_list.append(float('{0:.2f}'.format(list(kw_stats.values())[3]/1000000)))
         nums_list.append(float('{0:.2f}'.format(list(kw_stats.values())[4]/1000000)))
+    elif type == 3:
+        names_list, nums_list = build_poll_ratings(polls_df,start_date,end_date, poll_type)
+
 
     return nums_list, names_list

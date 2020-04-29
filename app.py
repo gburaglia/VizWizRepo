@@ -92,12 +92,20 @@ app.layout = html.Div(children=[
                     html.Label('Select Bars'),
                     dcc.Dropdown(id='bar_select',
                         options=[
-                            {'label': 'Polling', 'value':'1'},
-                            {'label': 'Keywords', 'value':'2'},
+                            {'label': 'Poll Winners', 'value':'1'},
+                            {'label': 'Poll Ratings', 'value':'3'},
+                            {'label': 'Google Keywords Total Spend', 'value':'2'},
                         ],
                         value='1'
                     ),
-                    html.Div(id='output-container-bar-date-picker-range')
+                    html.Div(id='output-container-bar-date-picker-range'),
+                    dcc.Dropdown(
+                        id = 'dropdown-poll-type',
+                        options=[
+                            {'label': 'Democratic', 'value': '1'},
+                            {'label': 'Republican', 'value': '2'}
+                        ],value = '1', style= {'display': 'block'}
+                    ),
                 ]),
             ])
             ],className="row")
@@ -132,6 +140,17 @@ app.layout = html.Div(children=[
 ])
 
 @app.callback(
+   Output(component_id='bar_select', component_property='style'),
+   [Input(component_id='dropdown-poll-type', component_property='value')])
+def show_hide_element(visibility_state):
+    if visibility_state == 1:
+        return {'display': 'block'}
+    if visibility_state == 2:
+        return {'display': 'none'}
+    if visibility_state == 3:
+        return {'display': 'block'}
+
+@app.callback(
     Output('example-graph', 'figure'),
     [Input(component_id='map_select', component_property='value'),
     Input(component_id='my-date-picker-range', component_property='start_date'),
@@ -162,16 +181,19 @@ def update_map(input_value,start_date,end_date):
     ],
     [Input(component_id='bar_select', component_property='value'),
     Input(component_id='my-bar-date-picker-range', component_property='start_date'),
-    Input(component_id='my-bar-date-picker-range', component_property='end_date')]
+    Input(component_id='my-bar-date-picker-range', component_property='end_date'),
+    Input(component_id='dropdown-poll-type', component_property='value')
+    ]
 )
-def update_bar(input_value,start_date,end_date):
+def update_bar(input_value,start_date,end_date,poll_type=None):
     #loc_df, targ_df, parties_df, polls_df = retrieve_data()
     start_date = pd.to_datetime(start_date)
     end_date = pd.to_datetime(end_date)
+
     if int(input_value) == 1:
         start_date_b = min(pd.to_datetime(polls_df['Week Beginning']))
         end_date_b = max(pd.to_datetime(polls_df['Week Beginning']))
-        title = "Average Polling Score"
+        title = "Polls Won"
         if start_date > end_date_b or end_date < start_date_b:
             start_date = start_date_b
             end_date = end_date_b
@@ -180,7 +202,7 @@ def update_bar(input_value,start_date,end_date):
         elif end_date > end_date_b:
             end_date = end_date_b
 
-    else:
+    elif int(input_value) == 2:
         kwords['Report_Date'] = pd.to_datetime(kwords['Report_Date'])
         start_date_b = min(kwords.Report_Date)
         end_date_b = max(kwords.Report_Date)
@@ -192,8 +214,19 @@ def update_bar(input_value,start_date,end_date):
             start_date = start_date_b
         elif end_date > end_date_b:
             end_date = end_date_b
+    else:
+        start_date_b = min(pd.to_datetime(polls_df['Week Beginning']))
+        end_date_b = max(pd.to_datetime(polls_df['Week Beginning']))
+        title = "Share of Polling Choices"
+        if start_date > end_date_b or end_date < start_date_b:
+            start_date = start_date_b
+            end_date = end_date_b
+        elif start_date < start_date_b:
+            start_date = start_date_b
+        elif end_date > end_date_b:
+            end_date = end_date_b
 
-    numbers, names = get_bar_data(int(input_value), start_date, end_date, polls_df, kwords)
+    numbers, names = get_bar_data(int(input_value), start_date, end_date, polls_df, kwords, poll_type)
     #min_date_allowed, max_date_allowed
 
     return numbers[3],numbers[1],numbers[0],numbers[2],numbers[4], start_date_b, end_date_b, names[3], names[1], names[0], names[2], names[4], title
