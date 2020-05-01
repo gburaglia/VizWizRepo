@@ -39,7 +39,7 @@ On second visualization, use dropdown menu to change between "Poll Winners", "St
 ## Visuals
 | Pictures        | Description             | Details  |
 | ------------- | :--------------------------| :-----------|
-|![alt text](static/images/bar1.jpg "Poll Winners")| Top 5 Poll Winners With User Inputted Date Range |  Displays the top 5 winners along with their respective percentage of votes received across all polls in the selected date range. Users can also toggle between republican poll winners and democratic poll winners.  |
+|![alt text](https://raw.githubusercontent.com/gburaglia/VizWizRepo/master/static/images/bar1.JPG?token=AEWI6ZPRBCCXYWKG2HYFSJ26VRZ3S)| Top 5 Poll Winners With User Inputted Date Range |  Displays the top 5 winners along with their respective percentage of votes received across all polls in the selected date range. Users can also toggle between republican poll winners and democratic poll winners.  |
 |![alt text](static/images/bar2.jpg "Keyword Winners")| Top 5 Keywords by Spend |  Displays the top 5 keywords across all recorded political advertisements with their respective spend percentage.  |
 |![alt text](static/images/map1.jpg "Poll Winners")| Poll Winners by State With User Inputted Date Range |  Displays the winner of the latest poll in each state within the selected date range.  |
 |![alt text](static/images/map2.jpg "State Party Identification")     | Political Party Identification by State                | Each state is classified as either strong democratic, lean democratic, strong republican, lean republican, or competitive meaning there is no clear political leaning for that state. |
