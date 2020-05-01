@@ -48,7 +48,7 @@ On second visualization, use dropdown menu to change between "Poll Winners", "St
 
 ## How To Install
 
-This is a lightweight app that is run using python.  We recommend creating a virutal environement and installing the python packages using the requirements.txt file.
+This is a lightweight app that is run using python.  We used python 3.6 for development, so we woudl encourage you to use the same.  For installation we recommend creating a virutal environement and installing the python packages using the requirements.txt file.
 You can create an environment using an Anaconda Prompt:
 ```
 conda create -n myenv python=3.6
