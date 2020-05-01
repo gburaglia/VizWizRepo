@@ -48,23 +48,28 @@ On second visualization, use dropdown menu to change between "Poll Winners", "St
 
 ## How To Install
 
-In order to use Dash, install several packages.
-
-*Note: starting with dash 0.37.0, dash automatically installs dash-renderer, dash-core-components, dash-html-components, and dash-table, using known-compatible versions of each. You need not and should not install these separately any longer, only dash itself.*
-
-
-```bash
-pip install dash==1.11.0
+This is a lightweight app that is run using python.  We recommend creating a virutal environement and installing the python packages using the requirements.txt file.
+You can create an environment using an Anaconda Prompt:
 ```
-Install python and several python libraries
-
-```bash
-pip install seaborn
-pip install pandas
-pip install numpy
-pip install plotly==4.6.0
+conda create -n myenv python=3.6
 ```
-Run app.py on a local server through preferred method.
+Next you would activate the environment:
+```
+conda activate myenv
+```
+To install the required packages, execute the command:
+```
+pip install -r requirements.txt
+```
+
+After the packages are installed, Run app.py on a local server through preferred method.
+Typically shown as:
+```
+python app.py
+```
+
+In Google Chrome (the one and only brower we tested on), open up a new window and go to localhost, post 3050.
+In our case the url is simply  http://127.0.0.1:3050/
 
 ## Methodology & Motivation
 
