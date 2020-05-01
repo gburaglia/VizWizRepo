@@ -11,8 +11,9 @@ def retrieve_data():
     targ_df = pd.read_csv('data/USTargetedSpend.csv', index_col=0)
     parties_df = pd.read_csv('data/PartyAffiliationByState.csv', index_col=0)
     polls_df = pd.read_csv('data/PresidentialPrimaryPolls.csv', index_col=False)
+    kwords = pd.read_csv('data/google-political-ads-top-keywords-history.csv')
 
-    return loc_df, targ_df, parties_df, polls_df
+    return loc_df, targ_df, parties_df, polls_df, kwords
 
 def splitListToRows(row,row_accumulator,target_column,separator):
     split_row = row[target_column].split(separator)
@@ -64,7 +65,13 @@ def build_parties(parties_df):
             zarray.append(5.0)
     return parties_df,zarray
 
-def build_polls(polls_df,start_date, end_date):
+def build_polls(polls_df,start_date, end_date,poll_type=None):
+
+    if poll_type != None:
+        if int(poll_type) == 1:
+            polls_df = polls_df[polls_df.party == 'DEM']
+        elif int(poll_type) == 2:
+            polls_df = polls_df[polls_df.party == 'REP']
 
     polls_df["State-Week"] = polls_df["state"] + "," + polls_df['Week Beginning']
     polls_grouped_df = polls_df.groupby(["State-Week",'candidate_name']).agg({'People Voting':['sum'],'state':['first'],'Week Beginning':['first']})
@@ -447,36 +454,103 @@ def draw_bars():
     myFig.add_trace(mydata)
     return myFig
 
-def get_bar_data(type, start_date, end_date,polls_df):
+def build_poll_ratings(polls_df,start_date, end_date, poll_type=None):
+
+    if poll_type != None:
+        if int(poll_type) == 1:
+            polls_df = polls_df[polls_df.party == 'DEM']
+        elif int(poll_type) == 2:
+            polls_df = polls_df[polls_df.party == 'REP']
+
+    polls_df['Week Beginning'] = pd.to_datetime(polls_df['Week Beginning'])
+    polls_df = polls_df[polls_df['Week Beginning'] >= start_date]
+    polls_df = polls_df[polls_df['Week Beginning'] <= end_date]
+    polls_summary = polls_df.groupby('candidate_name').agg({'People Voting':['sum']})
+    total = sum(polls_df['People Voting'])
+    polls_summary['Vote Share'] = (polls_summary['People Voting'] / total) * 100
+    polls_summary = polls_summary.round(2)
+    polls_summary = polls_summary.sort_values(['Vote Share'],ascending=False).reset_index().head(5)
+    names_list = [polls_summary.candidate_name[0], polls_summary.candidate_name[1], polls_summary.candidate_name[2], polls_summary.candidate_name[3], polls_summary.candidate_name[4]]
+    nums_list = [polls_summary['Vote Share'][0], polls_summary['Vote Share'][1], polls_summary['Vote Share'][2], polls_summary['Vote Share'][3], polls_summary['Vote Share'][4]]
+
+    return names_list, nums_list
+
+def update_keywords(name, value, kw_stats):
+    if name in kw_stats:
+        kw_stats[name] = kw_stats[name] + value
+    else:
+        kw_stats[name] = value
+
+    return kw_stats
+
+def get_bar_data(type, start_date, end_date, polls_df, kwords, poll_type):
     #list of numbers(polling results or)
     nums_list =[]
     #list of names (candidates or keywords)
     names_list=[]
-
-    type = 1
     if(type == 1):
         #filter polling data tto date Range
         # aggregate and sort
         # arrange
-        polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
-
+        polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date, poll_type)
         #Get top 5 candidates and number of states
         polls_count_df = polls_max_filtered_df.groupby(['candidate_name']).agg({'State':['count']})
         polls_count_df.columns=["State Count"]
         polls_count_final_df = polls_count_df.sort_values(['State Count'],ascending=False).reset_index().head(5)
-
-
-
         #list of polling numbers
         for n in range(1,6):
-            nums_list.append(polls_count_final_df.iloc[n-1,1])
-
-
+            try:
+                nums_list.append(polls_count_final_df.iloc[n-1,1])
+            except:
+                nums_list.append(0)
          #list of candidate names
         for c in range(1,6):
-            names_list.append(polls_count_df.iloc[c-1,0])
+            try:
+                names_list.append(polls_count_df.index[c-1])
+            except:
+                names_list.append('')
+    elif type == 2:
+        kwords['Report_Date'] = pd.to_datetime(kwords['Report_Date'])
+        kw = kwords[(kwords.Report_Date >= start_date) & (kwords.Report_Date < end_date)]
+        kw_stats = {}
 
-    else:
-        results = [4,2,1,3,5]
+        for i,row in kw.iterrows():
+            name1 = kw['Keyword_1'][i]
+            value1 = kw['Spend_USD_1'][i]
+            name2 = kw['Keyword_2'][i]
+            value2 = kw['Spend_USD_2'][i]
+            name3 = kw['Keyword_3'][i]
+            value3 = kw['Spend_USD_3'][i]
+            name4 = kw['Keyword_4'][i]
+            value4 = kw['Spend_USD_4'][i]
+            name5 = kw['Keyword_5'][i]
+            value5 = kw['Spend_USD_5'][i]
+            name6 = kw['Keyword_6'][i]
+            value6 = kw['Spend_USD_6'][i]
+
+            kw_stats = update_keywords(name1, value1, kw_stats)
+            kw_stats = update_keywords(name2, value2, kw_stats)
+            kw_stats = update_keywords(name3, value3, kw_stats)
+            kw_stats = update_keywords(name4, value4, kw_stats)
+            kw_stats = update_keywords(name5, value5, kw_stats)
+            kw_stats = update_keywords(name6, value6, kw_stats)
+
+        kw_stats = {k: v for k, v in sorted(kw_stats.items(), key=lambda item: item[1], reverse = True)}
+        names_list = []
+        names_list.append(list(kw_stats.keys())[0].title())
+        names_list.append(list(kw_stats.keys())[1].title())
+        names_list.append(list(kw_stats.keys())[2].title())
+        names_list.append(list(kw_stats.keys())[3].title())
+        names_list.append(list(kw_stats.keys())[4].title())
+
+        nums_list = []
+        nums_list.append(float('{0:.2f}'.format(list(kw_stats.values())[0]/1000000)))
+        nums_list.append(float('{0:.2f}'.format(list(kw_stats.values())[1]/1000000)))
+        nums_list.append(float('{0:.2f}'.format(list(kw_stats.values())[2]/1000000)))
+        nums_list.append(float('{0:.2f}'.format(list(kw_stats.values())[3]/1000000)))
+        nums_list.append(float('{0:.2f}'.format(list(kw_stats.values())[4]/1000000)))
+    elif type == 3:
+        names_list, nums_list = build_poll_ratings(polls_df,start_date,end_date, poll_type)
+
 
     return nums_list, names_list

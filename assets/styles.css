@@ -52,6 +52,16 @@ body {
     transform: rotate(360deg);
   }
 }
+div.barhalfA {
+  float: left;
+  margin-top: 40px;
+  margin-left: 5%;
+}
+div.barhalfB {
+  float: right;
+  width: 40%;
+  margin-right: 15%;
+}
 .maintext {
   display: block;
   font-size: 1em;
@@ -201,4 +211,49 @@ body {
   animation-fill-mode:forwards;
   animation-duration: 6s;
   animation-iteration-count: 1;
+}
+.loading .lab1 {
+  position: absolute;
+  word-wrap: normal;
+  width: 50px;
+  text-align: center;
+  font-size: 11px;
+  transform: translate(0%, 10%);
+}
+.loading .lab2 {
+  position: absolute;
+  word-wrap: normal;
+  width: 50px;
+  text-align: center;
+  font-size: 11px;
+  transform: translate(110%, 10%)
+}
+.loading .lab3 {
+  position: absolute;
+  word-wrap: normal;
+  width: 50px;
+  text-align: center;
+  font-size: 11px;
+  transform: translate(220%, 10%)
+}
+.loading .lab4 {
+  position: absolute;
+  word-wrap: normal;
+  width: 50px;
+  text-align: center;
+  font-size: 11px;
+  transform: translate(330%, 10%)
+}
+.loading .lab5 {
+  position: absolute;
+  word-wrap: normal;
+  width: 50px;
+  text-align: center;
+  font-size: 11px;
+  transform: translate(440%, 10%)
+}
+.loading .barTitle {
+  position: absolute;
+  transform: translate(-10%, -1045%);
+  font-weight: bold;
 }
