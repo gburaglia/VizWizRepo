@@ -99,12 +99,13 @@ app.layout = html.Div(children=[
                         value='1'
                     ),
                     html.Div(id='output-container-bar-date-picker-range'),
+                    html.Br(),
                     dcc.Dropdown(
                         id = 'dropdown-poll-type',
                         options=[
                             {'label': 'Democratic', 'value': '1'},
                             {'label': 'Republican', 'value': '2'}
-                        ],value = '1', style= {'display': 'block'}
+                        ],value = '1', style = {'display': 'block'}
                     ),
                 ]),
             ])
@@ -140,12 +141,12 @@ app.layout = html.Div(children=[
 ])
 
 @app.callback(
-   Output(component_id='bar_select', component_property='style'),
-   [Input(component_id='dropdown-poll-type', component_property='value')])
+   Output('dropdown-poll-type', 'style'),
+   [Input(component_id='bar_select', component_property='value')])
 def show_hide_element(visibility_state):
     if visibility_state == 1:
         return {'display': 'block'}
-    if visibility_state == 2:
+    if int(visibility_state) == 2:
         return {'display': 'none'}
     if visibility_state == 3:
         return {'display': 'block'}
@@ -186,7 +187,7 @@ def update_map(input_value,start_date,end_date):
     ]
 )
 def update_bar(input_value,start_date,end_date,poll_type=None):
-    #loc_df, targ_df, parties_df, polls_df = retrieve_data()
+
     start_date = pd.to_datetime(start_date)
     end_date = pd.to_datetime(end_date)
 
@@ -201,7 +202,6 @@ def update_bar(input_value,start_date,end_date,poll_type=None):
             start_date = start_date_b
         elif end_date > end_date_b:
             end_date = end_date_b
-
     elif int(input_value) == 2:
         kwords['Report_Date'] = pd.to_datetime(kwords['Report_Date'])
         start_date_b = min(kwords.Report_Date)
@@ -217,7 +217,7 @@ def update_bar(input_value,start_date,end_date,poll_type=None):
     else:
         start_date_b = min(pd.to_datetime(polls_df['Week Beginning']))
         end_date_b = max(pd.to_datetime(polls_df['Week Beginning']))
-        title = "Share of Polling Choices"
+        title = "Percentage Share of Polling Choices"
         if start_date > end_date_b or end_date < start_date_b:
             start_date = start_date_b
             end_date = end_date_b
@@ -227,7 +227,6 @@ def update_bar(input_value,start_date,end_date,poll_type=None):
             end_date = end_date_b
 
     numbers, names = get_bar_data(int(input_value), start_date, end_date, polls_df, kwords, poll_type)
-    #min_date_allowed, max_date_allowed
 
     return numbers[3],numbers[1],numbers[0],numbers[2],numbers[4], start_date_b, end_date_b, names[3], names[1], names[0], names[2], names[4], title
 
