@@ -2,6 +2,8 @@
 
 # Viz Wiz Contest Spring 2020
 
+This project is on Github:  https://github.com/gburaglia/VizWizRepo
+
 Our goal was to develop a creative design using innovative visualization tools. We wanted to explore mediums we didn't have previous experience with to expand our boundaries and increase our knowledge.
 
 <p align="center">
