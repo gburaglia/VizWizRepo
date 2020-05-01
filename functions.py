@@ -87,7 +87,7 @@ def build_polls(polls_df,start_date, end_date,poll_type=None):
     polls_max_filtered_df = polls_max_filtered_df.sort_values(['State','Week'],ascending=False)
 
     polls_regrouped_df =polls_max_filtered_df.groupby(["State"]).agg({'candidate_name':['first'],'Votes':['first'],'Week':['first']}).reset_index()
-    polls_regrouped_df.columns=['State','candidate_name','Votes','Week']
+    polls_regrouped_df.columns=['State','Candidate Name','Votes','Week']
 
     polls_regrouped_df
 
@@ -95,7 +95,7 @@ def build_polls(polls_df,start_date, end_date,poll_type=None):
     return polls_max_filtered_df,polls_regrouped_df
 
 def generate_polls_mapped_z(polls_orgvotes_df, polls_zlist,polls_zarray):
-    candidate_list = list((polls_orgvotes_df["candidate_name"]))
+    candidate_list = list((polls_orgvotes_df["Candidate Name"]))
     mapped_z = []
     for x in range(0,len(candidate_list)):
         for y in range(0,len(polls_zlist)):
@@ -107,7 +107,7 @@ def generate_polls_mapped_z(polls_orgvotes_df, polls_zlist,polls_zarray):
 
 def build_polls_zarray(polls_orgvotes_df):
     polls_zarray_builder = []
-    polls_zarray_builder = polls_orgvotes_df["candidate_name"]
+    polls_zarray_builder = polls_orgvotes_df["Candidate Name"]
     polls_zlist = list(set(polls_zarray_builder))
 
     polls_zarray = []
@@ -173,45 +173,84 @@ def create_parties_limits(parties_df,zarray):
 def draw_polls_trace(myFig, data, polls_orgvotes_df,mycolorscale):
     polls_orgvotes_df["Week String"] = polls_orgvotes_df["Week"].dt.strftime("%x")
     #endpts = list(np.linspace(1, 12, len(mycolorscale) - 1))
+    myFig = px.choropleth(polls_orgvotes_df,
+                    locations=polls_orgvotes_df['State'],  # DataFrame column with locations
+                    color=polls_orgvotes_df['Candidate Name'],  # DataFrame column with color values
+                    hover_name = polls_orgvotes_df['Candidate Name'],
+                    locationmode = 'USA-states',
+                    color_discrete_sequence = mycolorscale,
+                    )
+    myFig.update_traces(
+    hoverinfo = 'text + name + location',
+    hovertemplate = None)
 
-    event_data4 = go.Choropleth(
-        autocolorscale=False,
-        #colorscale= 'agsunset',
-        colorscale = mycolorscale,
-        locations=polls_orgvotes_df['State'],  # DataFrame column with locations
-        text=  polls_orgvotes_df["candidate_name"] +"<br>Date:" + polls_orgvotes_df["Week String"] +"<br>Votes:"+ round(polls_orgvotes_df["Votes"],0).astype(str),
-        z=polls_orgvotes_df["Z Values"],
-        hoverinfo= 'location + text',
-        locationmode = 'USA-states', # Set to plot as US States
-        #visible=False,
-        showscale=False,
-        )
-    data.append(event_data4)
-    myFig.add_trace(event_data4)
+    #event_data4 = go.Choropleth(
+    #    autocolorscale=False,
+    #    #colorscale= 'agsunset',
+    #    colorscale = mycolorscale,
+    #    locations=polls_orgvotes_df['State'],  # DataFrame column with locations
+    #    text=  polls_orgvotes_df["candidate_name"] +"<br>Date:" + polls_orgvotes_df["Week String"] +"<br>Votes:"+ round(polls_orgvotes_df["Votes"],0).astype(str),
+    #    z=polls_orgvotes_df["Z Values"],
+    #    hoverinfo= 'location + text',
+    #    locationmode = 'USA-states', # Set to plot as US States
+    #    #visible=False,
+    #    showscale=False,
+    #    )
+
+
+    #data.append(event_data4)
+    #myFig.add_trace(event_data4)
     return myFig,data
 
 def draw_loc_trace(myFig,data,loc_tbl):
-    event_data = go.Choropleth(
-        locations=loc_tbl.index,  # DataFrame column with locations
-        z=loc_tbl["Spend_USD"],  # DataFrame column with color values
-        hoverinfo='location+z', # DataFrame column hover info
-        locationmode = 'USA-states',
+    #event_data = go.Choropleth(
+    #    locations=loc_tbl.index,  # DataFrame column with locations
+    #    z=loc_tbl["Spend_USD"],  # DataFrame column with color values
+    #    hoverinfo='location+z', # DataFrame column hover info
+    #    locationmode = 'USA-states',
         #visible=False
+    loc_tbl = loc_tbl.rename(columns={"Spend_USD":"Spend in USD"})
+
+    myFig = px.choropleth(loc_tbl,
+                    locations=loc_tbl.index,  # DataFrame column with locations
+                    color=loc_tbl["Spend in USD"],
+                    locationmode = 'USA-states',
+                    color_continuous_scale='deep'
+                    )
+    myFig.update_traces(
+    hoverinfo = 'location+text+name+z',
+    hovertemplate = None
         )
-    myFig.add_trace(event_data)
-    data.append(event_data)
+    #myFig.add_trace(event_data)
+    #data.append(event_data)
+    myFig.update_layout(dragmode=False,geo_scope='usa')
     return myFig, data
 
 def draw_targ_trace(myFig,data,cleaned_pivot):
-    event_data2 = go.Choropleth(
-        locations=cleaned_pivot.index,  # DataFrame column with locations
-        z=cleaned_pivot["Ads_List"],  # DataFrame column with color values
-        hoverinfo='location+z', # DataFrame column hover info
-        locationmode = 'USA-states',
+    #event_data2 = go.Choropleth(
+    #    locations=cleaned_pivot.index,  # DataFrame column with locations
+    #    z=cleaned_pivot["Ads_List"],  # DataFrame column with color values
+    #    hoverinfo='location+z', # DataFrame column hover info
+    #    locationmode = 'USA-states',
         #visible=False
-        )
-    myFig.add_trace(event_data2)
-    data.append(event_data2)
+    #    )
+    #myFig.add_trace(event_data2)
+    #data.append(event_data2)
+
+    cleaned_pivot = cleaned_pivot.rename(columns={"Ads_List":"Number of Ads"})
+
+    myFig = px.choropleth(cleaned_pivot,
+                    locations=cleaned_pivot.index,  # DataFrame column with locations
+                    color=cleaned_pivot["Number of Ads"],
+                    locationmode = 'USA-states',
+                    color_continuous_scale='dense'
+                    )
+    myFig.update_traces(
+    hoverinfo = 'location+text+name+z',
+    hovertemplate = None)
+    myFig.update_layout(title= {'text':'Number of Targeted Ads'}, dragmode=False, geo_scope='usa',)
+
+
     return myFig, data
 
 def draw_parties_trace(myFig,data,parties_df, zarray, SD_limit, LD_limit, C_limit, LR_limit, SR_limit):
@@ -224,7 +263,9 @@ def draw_parties_trace(myFig,data,parties_df, zarray, SD_limit, LD_limit, C_limi
                     #color_discrete_sequence=px.colors.qualitative.G10,
                    color_discrete_sequence=['rgb(4,21,59)','rgb(139,195,236)', 'rgb(193,200,209)', 'rgb(247,190,192)','rgb(206,0,0)'],
                     )
-
+    myFig.update_traces(
+    hoverinfo = 'text + name + location',
+    hovertemplate = None)
     #event_data3 = go.Choropleth(
     #autocolorscale=False,
     #colorscale=[[0.0, 'rgb(4,21,59)'],
@@ -269,7 +310,8 @@ def map_layout():
         ),
         bgcolor="LightSteelBlue",
         bordercolor="Black",
-        borderwidth=2
+        borderwidth=2,
+
     )
 
     )
@@ -290,14 +332,19 @@ def draw_map(num, loc_tbl, cleaned_pivot, parties_df, zarray, polls_orgvotes_df)
         myFig = go.Figure()
         SD_limit, LD_limit, C_limit, LR_limit, SR_limit = create_parties_limits(parties_df,zarray) #Limits for parties df
         displayFig, displayData = draw_parties_trace(myFig,data,parties_df,zarray,SD_limit, LD_limit, C_limit, LR_limit, SR_limit)
+        layout = map_layout()
+        displayFig.update_layout(layout)
     elif(num==4):
         data = []
         myFig = go.Figure()
         candidate_num,polls_zarray, polls_zlist = build_polls_zarray(polls_orgvotes_df)
         mapped_z = generate_polls_mapped_z(polls_orgvotes_df,polls_zlist,polls_zarray)
+
         #lim_array = build_polls_limits(polls_orgvotes_df,polls_zarray,mapped_z)
         mycolorscale = generate_polls_colors(candidate_num)
         displayFig, displayData = draw_polls_trace(myFig,data,polls_orgvotes_df,mycolorscale)
+        layout = map_layout()
+        displayFig.update_layout(layout)
 
     return displayFig, displayData
 
