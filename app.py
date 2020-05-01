@@ -116,10 +116,10 @@ app.layout = html.Div(children=[
         html.Label('Select Map'),
         dcc.Dropdown(id='map_select',
             options=[
-                {'label': 'Polling Results', 'value': '4'},
-                {'label': 'Party Affiliation', 'value': '3'},
-                {'label': 'Ad Targetting', 'value': '2'},
-                {'label': 'Politcal Ad Spending', 'value': '1'}
+                {'label': 'Poll Winners', 'value': '4'},
+                {'label': 'State Party Identification', 'value': '3'},
+                {'label': 'Ad Targeting', 'value': '2'},
+                {'label': 'Ad Spending', 'value': '1'}
             ],
             value='4'
         ),
