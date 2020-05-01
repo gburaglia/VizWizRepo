@@ -26,6 +26,16 @@ Google's [Political Advertising Transparency Report.](https://transparencyreport
 
 ## How To Use
 
+On first data visualization, use dropdown menu to change between "Poll Winners" and "Keywords". For "Poll Winners" user can also select a specific date range and toggle between "Democratic" and "Republican" poll winners.
+
+Scroll down on page.
+
+On second visualization, use dropdown menu to change between "Poll Winners", "State Party Identification", "Ad Targeting", and "Ad Spending". For "Poll Winners" user can also select a specific date range.
+
+![alt text](https://media.giphy.com/media/h7No5m3tAeV4Q/giphy.gif)
+
+
+
 ## Visuals
 | Pictures        | Description             | Details  |
 | ------------- | :--------------------------| :-----------|
@@ -37,6 +47,24 @@ Google's [Political Advertising Transparency Report.](https://transparencyreport
 |![alt text](static/images/map4.jpg "Ad Spending") | Political Advertisement Spending by State    | How much is collectively spent on political advertising in each state.        |
 
 ## How To Install
+
+In order to use Dash, install several packages.
+
+*Note: starting with dash 0.37.0, dash automatically installs dash-renderer, dash-core-components, dash-html-components, and dash-table, using known-compatible versions of each. You need not and should not install these separately any longer, only dash itself.*
+
+
+```bash
+pip install dash==1.11.0
+```
+Install python and several python libraries
+
+```bash
+pip install seaborn
+pip install pandas
+pip install numpy
+pip install plotly==4.6.0
+```
+Run app.py on a local server through preferred method.
 
 ## Methodology & Motivation
 
@@ -51,9 +79,9 @@ We leveraged several python libraries, like plotly's python library for graphing
 Once we had a few basic choropleth map visualizations, we explored using javascript to create other visuals. Although time intensive, we found the visual created with javascript was especially flexible and gave the most room for creativity.
 
 ## Team Members
-John Neville
+[John Neville](https://github.com/DSNeville)
 
-Gabriela Buraglia
+[Gabriela Buraglia](https://github.com/gburaglia)
 
 ## Future Work
 Future improvements we would like to incorporate include:
