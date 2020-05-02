@@ -23,7 +23,7 @@ cleaned_pivot = build_targ(targ_df)
 loc_tbl = build_loc(loc_df)
 parties_df, zarray = build_parties(parties_df)
 polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
-layout = map_layout()
+#layout = map_layout()
 
 external_stylesheets=["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -82,7 +82,7 @@ app.layout = html.Div(children=[
                 html.Div([
                     html.Label("Pick Date Range"),
                     dcc.DatePickerRange(
-                        id='my-bar-date-picker-range',
+                        id='my-bar-date-picker-range', className="custom-calendar",
                         min_date_allowed=datetime(1995, 8, 5),
                         max_date_allowed=datetime(2020, 9, 19),
                         start_date = datetime(2020,1,3).date(),
@@ -90,18 +90,19 @@ app.layout = html.Div(children=[
                         minimum_nights = 7
                     ),
                     html.Label('Select Bars'),
-                    dcc.Dropdown(id='bar_select',
+                    dcc.Dropdown(id='bar_select', className="custom-dropdown",
                         options=[
                             {'label': 'Poll Winners', 'value':'1'},
                             {'label': 'Poll Ratings', 'value':'3'},
                             {'label': 'Google Keywords Total Spend', 'value':'2'},
-                        ],
+                            ],
+
                         value='1'
                     ),
-                    html.Div(id='output-container-bar-date-picker-range'),
+
                     html.Br(),
                     dcc.Dropdown(
-                        id = 'dropdown-poll-type',
+                        id = 'dropdown-poll-type', className="custom-dropdown",
                         options=[
                             {'label': 'Democratic', 'value': '1'},
                             {'label': 'Republican', 'value': '2'}
@@ -111,10 +112,9 @@ app.layout = html.Div(children=[
             ])
             ],className="row")
         ]),
-        html.Br(),
 
         html.Label('Select Map'),
-        dcc.Dropdown(id='map_select',
+        dcc.Dropdown(id='map_select', className="custom-dropdown",
             options=[
                 {'label': 'Poll Winners', 'value': '4'},
                 {'label': 'State Party Identification', 'value': '3'},
@@ -123,10 +123,12 @@ app.layout = html.Div(children=[
             ],
             value='4'
         ),
+
         html.Div([
+
             html.Label("Pick Date Range"),
                 dcc.DatePickerRange(
-                    id='my-date-picker-range',
+                    id='my-date-picker-range',className="custom-calendar",
                     min_date_allowed=datetime(1995, 8, 5),
                     max_date_allowed=datetime(2020, 9, 19),
                     start_date = datetime(2020,1,3).date(),
@@ -134,6 +136,7 @@ app.layout = html.Div(children=[
                 ),
             html.Div(id='output-container-date-picker-range')
         ]),
+    html.Br(),
     dcc.Graph(
         id='example-graph'
     )
@@ -161,7 +164,7 @@ def update_map(input_value,start_date,end_date):
     polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
     mynum=input_value
     displayFig, displayData = draw_map(mynum, loc_tbl, cleaned_pivot, parties_df, zarray, polls_orgvotes_df)
-    
+
     return displayFig
 
 @app.callback(

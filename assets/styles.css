@@ -4,7 +4,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: #eee;
+  background: #b3c8d9;
 }
 .container {
   width: 960px;
@@ -14,7 +14,7 @@ body {
   padding-top: 10px;
   overflow: hidden;
   border-radius: 5px;
-  box-shadow: inset 0px 0px 5px 1px #d1d1d1;
+  box-shadow: inset 0px 0px 5px 1px #8095a6;
 }
 .container::after,
 .container::before {
@@ -23,8 +23,8 @@ body {
   position: absolute;
   top: -70px;
 
-  background: #eee;
-  box-shadow: 0px 0px 16px #d1d1d1;
+  background: #b3c8d9;
+  box-shadow: 0px 0px 16px #8095a6;
 }
 .container::before {
   width: 700px;
@@ -81,7 +81,7 @@ div.barhalfB {
   height: 60px;
   width: 300px;
   padding-top: 225px;
-  background:  #bac6d4;
+  background:  #f4e7d7;
   border-radius: 10%;
 }
 .loading .circle1 {
@@ -256,4 +256,19 @@ div.barhalfB {
   position: absolute;
   transform: translate(-10%, -1045%);
   font-weight: bold;
+}
+
+.custom-dropdown .Select-value {
+  background-color: #f4e7d7;
+
+}
+
+.custom-calendar .DateRangePickerInput {
+  background-color: #f4e7d7;
+
+}
+
+.custom-calendar .DateInput_input {
+  background-color: #f4e7d7;
+  border-color: #b3c8d9
 }

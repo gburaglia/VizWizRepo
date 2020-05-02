@@ -184,22 +184,6 @@ def draw_polls_trace(myFig, data, polls_orgvotes_df,mycolorscale):
     hoverinfo = 'text + name + location',
     hovertemplate = None)
 
-    #event_data4 = go.Choropleth(
-    #    autocolorscale=False,
-    #    #colorscale= 'agsunset',
-    #    colorscale = mycolorscale,
-    #    locations=polls_orgvotes_df['State'],  # DataFrame column with locations
-    #    text=  polls_orgvotes_df["candidate_name"] +"<br>Date:" + polls_orgvotes_df["Week String"] +"<br>Votes:"+ round(polls_orgvotes_df["Votes"],0).astype(str),
-    #    z=polls_orgvotes_df["Z Values"],
-    #    hoverinfo= 'location + text',
-    #    locationmode = 'USA-states', # Set to plot as US States
-    #    #visible=False,
-    #    showscale=False,
-    #    )
-
-
-    #data.append(event_data4)
-    #myFig.add_trace(event_data4)
     return myFig,data
 
 def draw_loc_trace(myFig,data,loc_tbl):
@@ -223,19 +207,13 @@ def draw_loc_trace(myFig,data,loc_tbl):
         )
     #myFig.add_trace(event_data)
     #data.append(event_data)
-    myFig.update_layout(dragmode=False,geo_scope='usa')
+    myFig.update_layout(title= {'text':'Political Ad Spending by State in Millions','x':0.5}, dragmode=False, geo_scope='usa', paper_bgcolor = 'rgb(244,231,215)', geo={'bgcolor': 'rgba(0,0,0,0)', 'lakecolor':'rgb(244,231,215)'},font =dict(
+        color="Black",
+        size = 14
+    ))
     return myFig, data
 
 def draw_targ_trace(myFig,data,cleaned_pivot):
-    #event_data2 = go.Choropleth(
-    #    locations=cleaned_pivot.index,  # DataFrame column with locations
-    #    z=cleaned_pivot["Ads_List"],  # DataFrame column with color values
-    #    hoverinfo='location+z', # DataFrame column hover info
-    #    locationmode = 'USA-states',
-        #visible=False
-    #    )
-    #myFig.add_trace(event_data2)
-    #data.append(event_data2)
 
     cleaned_pivot = cleaned_pivot.rename(columns={"Ads_List":"Number of Ads"})
 
@@ -248,7 +226,10 @@ def draw_targ_trace(myFig,data,cleaned_pivot):
     myFig.update_traces(
     hoverinfo = 'location+text+name+z',
     hovertemplate = None)
-    myFig.update_layout(title= {'text':'Number of Targeted Ads'}, dragmode=False, geo_scope='usa',)
+    myFig.update_layout(title= {'text':'Number of Targeted Ads by State','x':0.5}, dragmode=False, geo_scope='usa', paper_bgcolor = 'rgb(244,231,215)', geo={'bgcolor': 'rgba(0,0,0,0)', 'lakecolor':'rgb(244,231,215)'},font =dict(
+        color="Black",
+        size = 14
+    ))
 
 
     return myFig, data
@@ -266,54 +247,40 @@ def draw_parties_trace(myFig,data,parties_df, zarray, SD_limit, LD_limit, C_limi
     myFig.update_traces(
     hoverinfo = 'text + name + location',
     hovertemplate = None)
-    #event_data3 = go.Choropleth(
-    #autocolorscale=False,
-    #colorscale=[[0.0, 'rgb(4,21,59)'],
-    #            [SD_limit - 0.05, 'rgb(4,21,59)'],
-    #            [SD_limit, 'rgb(139,195,236)'],
-    #            [LD_limit- 0.05, 'rgb(139,195,236)'],
-    #            [LD_limit , 'rgb(193,200,209)'],
-    #            [C_limit - 0.05, 'rgb(193,200,209)'],
-    #            [C_limit, 'rgb(247,190,192)'],
-    #            [LR_limit - 0.05, 'rgb(247,190,192)'],
-    #            [LR_limit + 0.05, 'rgb(206,0,0)'],
-    #            [SR_limit, 'rgb(206,0,0)']],
-    #locations=parties_df.index,  # DataFrame column with locations
-    #text= parties_df['Classification'],
-    #z= zarray,
-    #hoverinfo= 'text + z + location',
-    #locationmode = 'USA-states', # Set to plot as US States
-    #visible=False,
-    #showscale=False,
-    #)
-    #data.append(event_data3)
-    #myFig.add_trace(event_data3)
+    myFig.update_layout(title= {'text':'Political Affiliation by State','x':0.5}, dragmode=False, geo_scope='usa',paper_bgcolor = 'rgb(244,231,215)',geo={'bgcolor': 'rgba(0,0,0,0)', 'lakecolor':'rgb(244,231,215)'}, font =dict(
+        color="Black",
+        size = 14
+    ))
     return myFig, data
 
-def map_layout():
+def map_layout(myText):
     layout = dict(
+    title_text= myText,
+    title_x = 0.5,
+    font =dict(
+        color="Black",
+        size = 14
+    ),
+    #title_x=0.5,
     height = 600,
-    # top, bottom, left and right margins
-    margin = dict(t = 0, b = 0, l = 0, r = 0),
-    font = dict(color = '#FFFFFF', size = 11),
     geo_scope='usa',
     dragmode = False,
+    paper_bgcolor = 'rgb(244,231,215)',
+    geo={'bgcolor': 'rgba(0,0,0,0)', 'lakecolor':'rgb(244,231,215)'},
+    #plot_bgcolor = 'rgb(244,231,215)',
     showlegend=True,
     legend=dict(
         x=0.9,
         y=0.5,
         traceorder="normal",
         font=dict(
-            family="sans-serif",
             size=12,
-            color="black"
+            color="Black"
         ),
-        bgcolor="LightSteelBlue",
+        bgcolor='rgb(244,231,215)',
         bordercolor="Black",
-        borderwidth=2,
-
+        borderwidth=1,
     )
-
     )
     return layout
 
@@ -332,7 +299,7 @@ def draw_map(num, loc_tbl, cleaned_pivot, parties_df, zarray, polls_orgvotes_df)
         myFig = go.Figure()
         SD_limit, LD_limit, C_limit, LR_limit, SR_limit = create_parties_limits(parties_df,zarray) #Limits for parties df
         displayFig, displayData = draw_parties_trace(myFig,data,parties_df,zarray,SD_limit, LD_limit, C_limit, LR_limit, SR_limit)
-        layout = map_layout()
+        layout = map_layout('Political Party Identification by State')
         displayFig.update_layout(layout)
     elif(num==4):
         data = []
@@ -343,7 +310,7 @@ def draw_map(num, loc_tbl, cleaned_pivot, parties_df, zarray, polls_orgvotes_df)
         #lim_array = build_polls_limits(polls_orgvotes_df,polls_zarray,mapped_z)
         mycolorscale = generate_polls_colors(candidate_num)
         displayFig, displayData = draw_polls_trace(myFig,data,polls_orgvotes_df,mycolorscale)
-        layout = map_layout()
+        layout = map_layout('Poll Winners by State During Date Range')
         displayFig.update_layout(layout)
 
     return displayFig, displayData
@@ -433,7 +400,7 @@ def draw_bars():
         margin = dict(t = 2, b = 50, l = 2, r = 2),
         font = dict(color = '#FFFFFF', size = 11),
         dragmode = False,
-        plot_bgcolor= 'white',
+        #plot_bgcolor= 'white',
         )
     myFig.update_layout(layout)
     img = []
@@ -506,7 +473,7 @@ def get_bar_data(type, start_date, end_date, polls_df, kwords, poll_type):
          #list of candidate names
         for c in range(1,6):
             try:
-                names_list.append(polls_count_df.index[c-1])
+                names_list.append(polls_count_final_df.iloc[c-1,0])
             except:
                 names_list.append('')
     elif type == 2:
