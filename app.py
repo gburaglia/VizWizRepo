@@ -82,7 +82,7 @@ app.layout = html.Div(children=[
                 html.Div([
                     html.Label("Pick Date Range"),
                     dcc.DatePickerRange(
-                        id='my-bar-date-picker-range',
+                        id='my-bar-date-picker-range', className="custom-calendar",
                         min_date_allowed=datetime(1995, 8, 5),
                         max_date_allowed=datetime(2020, 9, 19),
                         start_date = datetime(2020,1,3).date(),
@@ -99,10 +99,10 @@ app.layout = html.Div(children=[
 
                         value='1'
                     ),
-                    html.Div(id='output-container-bar-date-picker-range'),
+
                     html.Br(),
                     dcc.Dropdown(
-                        id = 'dropdown-poll-type',
+                        id = 'dropdown-poll-type', className="custom-dropdown",
                         options=[
                             {'label': 'Democratic', 'value': '1'},
                             {'label': 'Republican', 'value': '2'}
@@ -112,10 +112,9 @@ app.layout = html.Div(children=[
             ])
             ],className="row")
         ]),
-        html.Br(),
 
         html.Label('Select Map'),
-        dcc.Dropdown(id='map_select',
+        dcc.Dropdown(id='map_select', className="custom-dropdown",
             options=[
                 {'label': 'Poll Winners', 'value': '4'},
                 {'label': 'State Party Identification', 'value': '3'},
@@ -124,10 +123,12 @@ app.layout = html.Div(children=[
             ],
             value='4'
         ),
+
         html.Div([
+
             html.Label("Pick Date Range"),
                 dcc.DatePickerRange(
-                    id='my-date-picker-range',
+                    id='my-date-picker-range',className="custom-calendar",
                     min_date_allowed=datetime(1995, 8, 5),
                     max_date_allowed=datetime(2020, 9, 19),
                     start_date = datetime(2020,1,3).date(),
@@ -135,6 +136,7 @@ app.layout = html.Div(children=[
                 ),
             html.Div(id='output-container-date-picker-range')
         ]),
+    html.Br(),
     dcc.Graph(
         id='example-graph'
     )
@@ -231,4 +233,4 @@ def update_bar(input_value,start_date,end_date,poll_type=None):
     return numbers[3],numbers[1],numbers[0],numbers[2],numbers[4], start_date_b, end_date_b, names[3], names[1], names[0], names[2], names[4], title
 
 if __name__ == '__main__':
-    app.run_server(debug=True,port=8050)
+    app.run_server(debug=True,port=3050)

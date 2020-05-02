@@ -207,7 +207,10 @@ def draw_loc_trace(myFig,data,loc_tbl):
         )
     #myFig.add_trace(event_data)
     #data.append(event_data)
-    myFig.update_layout(title= {'text':'Political Ad Spending by State in Millions','x':0.5}, dragmode=False, geo_scope='usa',)
+    myFig.update_layout(title= {'text':'Political Ad Spending by State in Millions','x':0.5}, dragmode=False, geo_scope='usa', paper_bgcolor = 'rgb(244,231,215)', geo={'bgcolor': 'rgba(0,0,0,0)', 'lakecolor':'rgb(244,231,215)'},font =dict(
+        color="Black",
+        size = 14
+    ))
     return myFig, data
 
 def draw_targ_trace(myFig,data,cleaned_pivot):
@@ -223,7 +226,10 @@ def draw_targ_trace(myFig,data,cleaned_pivot):
     myFig.update_traces(
     hoverinfo = 'location+text+name+z',
     hovertemplate = None)
-    myFig.update_layout(title= {'text':'Number of Targeted Ads by State','x':0.5}, dragmode=False, geo_scope='usa',)
+    myFig.update_layout(title= {'text':'Number of Targeted Ads by State','x':0.5}, dragmode=False, geo_scope='usa', paper_bgcolor = 'rgb(244,231,215)', geo={'bgcolor': 'rgba(0,0,0,0)', 'lakecolor':'rgb(244,231,215)'},font =dict(
+        color="Black",
+        size = 14
+    ))
 
 
     return myFig, data
@@ -241,30 +247,39 @@ def draw_parties_trace(myFig,data,parties_df, zarray, SD_limit, LD_limit, C_limi
     myFig.update_traces(
     hoverinfo = 'text + name + location',
     hovertemplate = None)
-    myFig.update_layout(title= {'text':'Political Affiliation by State','x':0.5}, dragmode=False, geo_scope='usa',)
+    myFig.update_layout(title= {'text':'Political Affiliation by State','x':0.5}, dragmode=False, geo_scope='usa',paper_bgcolor = 'rgb(244,231,215)',geo={'bgcolor': 'rgba(0,0,0,0)', 'lakecolor':'rgb(244,231,215)'}, font =dict(
+        color="Black",
+        size = 14
+    ))
     return myFig, data
 
 def map_layout(myText):
     layout = dict(
     title_text= myText,
     title_x = 0.5,
+    font =dict(
+        color="Black",
+        size = 14
+    ),
     #title_x=0.5,
     height = 600,
     geo_scope='usa',
     dragmode = False,
+    paper_bgcolor = 'rgb(244,231,215)',
+    geo={'bgcolor': 'rgba(0,0,0,0)', 'lakecolor':'rgb(244,231,215)'},
+    #plot_bgcolor = 'rgb(244,231,215)',
     showlegend=True,
     legend=dict(
         x=0.9,
         y=0.5,
         traceorder="normal",
         font=dict(
-            family="sans-serif",
             size=12,
-            color="black"
+            color="Black"
         ),
-        bgcolor="LightSteelBlue",
+        bgcolor='rgb(244,231,215)',
         bordercolor="Black",
-        borderwidth=2,
+        borderwidth=1,
     )
     )
     return layout
@@ -385,7 +400,7 @@ def draw_bars():
         margin = dict(t = 2, b = 50, l = 2, r = 2),
         font = dict(color = '#FFFFFF', size = 11),
         dragmode = False,
-        plot_bgcolor= 'white',
+        #plot_bgcolor= 'white',
         )
     myFig.update_layout(layout)
     img = []

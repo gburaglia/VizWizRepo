@@ -258,8 +258,17 @@ div.barhalfB {
   font-weight: bold;
 }
 
-.custom-dropdown .Select–multi .Select-value {
-  background-color: #fcba03;
-  border-color: #e3a700;
-  color: #fff;
+.custom-dropdown .Select-value {
+  background-color: #f4e7d7;
+
+}
+
+.custom-calendar .DateRangePickerInput {
+  background-color: #f4e7d7;
+
+}
+
+.custom-calendar .DateInput_input {
+  background-color: #f4e7d7;
+  border-color: #b3c8d9
 }
