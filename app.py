@@ -23,7 +23,7 @@ cleaned_pivot = build_targ(targ_df)
 loc_tbl = build_loc(loc_df)
 parties_df, zarray = build_parties(parties_df)
 polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
-layout = map_layout()
+#layout = map_layout()
 
 external_stylesheets=["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -90,12 +90,13 @@ app.layout = html.Div(children=[
                         minimum_nights = 7
                     ),
                     html.Label('Select Bars'),
-                    dcc.Dropdown(id='bar_select',
+                    dcc.Dropdown(id='bar_select', className="custom-dropdown",
                         options=[
                             {'label': 'Poll Winners', 'value':'1'},
                             {'label': 'Poll Ratings', 'value':'3'},
                             {'label': 'Google Keywords Total Spend', 'value':'2'},
-                        ],
+                            ],
+
                         value='1'
                     ),
                     html.Div(id='output-container-bar-date-picker-range'),
@@ -161,7 +162,7 @@ def update_map(input_value,start_date,end_date):
     polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_date)
     mynum=input_value
     displayFig, displayData = draw_map(mynum, loc_tbl, cleaned_pivot, parties_df, zarray, polls_orgvotes_df)
-    
+
     return displayFig
 
 @app.callback(
@@ -230,4 +231,4 @@ def update_bar(input_value,start_date,end_date,poll_type=None):
     return numbers[3],numbers[1],numbers[0],numbers[2],numbers[4], start_date_b, end_date_b, names[3], names[1], names[0], names[2], names[4], title
 
 if __name__ == '__main__':
-    app.run_server(debug=True,port=3050)
+    app.run_server(debug=True,port=8050)

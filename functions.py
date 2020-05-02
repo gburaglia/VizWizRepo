@@ -183,7 +183,7 @@ def draw_polls_trace(myFig, data, polls_orgvotes_df,mycolorscale):
     myFig.update_traces(
     hoverinfo = 'text + name + location',
     hovertemplate = None)
-    myFig.update_layout(title= {'text':'Poll Winners by State During Date Range','x':0.5}, dragmode=False, geo_scope='usa',)
+
     return myFig,data
 
 def draw_loc_trace(myFig,data,loc_tbl):
@@ -244,12 +244,12 @@ def draw_parties_trace(myFig,data,parties_df, zarray, SD_limit, LD_limit, C_limi
     myFig.update_layout(title= {'text':'Political Affiliation by State','x':0.5}, dragmode=False, geo_scope='usa',)
     return myFig, data
 
-def map_layout():
+def map_layout(myText):
     layout = dict(
+    title_text= myText,
+    title_x = 0.5,
+    #title_x=0.5,
     height = 600,
-    # top, bottom, left and right margins
-    margin = dict(t = 0, b = 0, l = 0, r = 0),
-    font = dict(color = '#FFFFFF', size = 11),
     geo_scope='usa',
     dragmode = False,
     showlegend=True,
@@ -265,9 +265,7 @@ def map_layout():
         bgcolor="LightSteelBlue",
         bordercolor="Black",
         borderwidth=2,
-
     )
-
     )
     return layout
 
@@ -286,7 +284,7 @@ def draw_map(num, loc_tbl, cleaned_pivot, parties_df, zarray, polls_orgvotes_df)
         myFig = go.Figure()
         SD_limit, LD_limit, C_limit, LR_limit, SR_limit = create_parties_limits(parties_df,zarray) #Limits for parties df
         displayFig, displayData = draw_parties_trace(myFig,data,parties_df,zarray,SD_limit, LD_limit, C_limit, LR_limit, SR_limit)
-        layout = map_layout()
+        layout = map_layout('Political Party Identification by State')
         displayFig.update_layout(layout)
     elif(num==4):
         data = []
@@ -297,7 +295,7 @@ def draw_map(num, loc_tbl, cleaned_pivot, parties_df, zarray, polls_orgvotes_df)
         #lim_array = build_polls_limits(polls_orgvotes_df,polls_zarray,mapped_z)
         mycolorscale = generate_polls_colors(candidate_num)
         displayFig, displayData = draw_polls_trace(myFig,data,polls_orgvotes_df,mycolorscale)
-        layout = map_layout()
+        layout = map_layout('Poll Winners by State During Date Range')
         displayFig.update_layout(layout)
 
     return displayFig, displayData
@@ -460,7 +458,7 @@ def get_bar_data(type, start_date, end_date, polls_df, kwords, poll_type):
          #list of candidate names
         for c in range(1,6):
             try:
-                names_list.append(polls_count_df.index[c-1])
+                names_list.append(polls_count_final_df.iloc[c-1,0])
             except:
                 names_list.append('')
     elif type == 2:

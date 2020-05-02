@@ -4,7 +4,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: #f4e7d7;
+  background: #b3c8d9;
 }
 .container {
   width: 960px;
@@ -14,7 +14,7 @@ body {
   padding-top: 10px;
   overflow: hidden;
   border-radius: 5px;
-  box-shadow: inset 0px 0px 5px 1px #dbcfc1;
+  box-shadow: inset 0px 0px 5px 1px #8095a6;
 }
 .container::after,
 .container::before {
@@ -23,8 +23,8 @@ body {
   position: absolute;
   top: -70px;
 
-  background: #f4e7d7;
-  box-shadow: 0px 0px 16px #dbcfc1;
+  background: #b3c8d9;
+  box-shadow: 0px 0px 16px #8095a6;
 }
 .container::before {
   width: 700px;
@@ -81,7 +81,7 @@ div.barhalfB {
   height: 60px;
   width: 300px;
   padding-top: 225px;
-  background:  #F4E7D7;
+  background:  #f4e7d7;
   border-radius: 10%;
 }
 .loading .circle1 {
@@ -256,4 +256,10 @@ div.barhalfB {
   position: absolute;
   transform: translate(-10%, -1045%);
   font-weight: bold;
+}
+
+.custom-dropdown .Select–multi .Select-value {
+  background-color: #fcba03;
+  border-color: #e3a700;
+  color: #fff;
 }
