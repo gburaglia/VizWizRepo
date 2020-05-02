@@ -2,16 +2,18 @@
 
 # Viz Wiz Contest Spring 2020
 
-Please view this project on Github:  https://github.com/gburaglia/VizWizRepo
 
-Our goal was to develop a creative design using innovative visualization tools. We wanted to explore mediums we didn't have previous experience with to expand our boundaries and increase our knowledge.
+Please view this project on Github:  [https://github.com/gburaglia/VizWizRepo](https://github.com/gburaglia/VizWizRepo)
 
+<p>
+Our goal was to develop a creative design using innovative visualization tools. We explored mediums we didn't have previous experience with to expand our boundaries and increase our knowledge.
+</p>
 <p align="center">
   <a href="#data">Data</a> •
   <a href="#how-to-use">How to Use</a> •
   <a href="#visuals">Visuals</a> •
   <a href="#how-to-install">How to Install</a> •
-  <a href="#methodology">Methodology & Motivation</a> •
+  <a href="#methodology-and-motivation">Methodology & Motivation</a> •
   <a href="#team-members">Team Members</a> •
   <a href="#future-work">Future Work</a> •
 
@@ -34,20 +36,20 @@ Scroll down on page.
 
 On second visualization, use dropdown menu to change between "Poll Winners", "State Party Identification", "Ad Targeting", and "Ad Spending". For "Poll Winners" user can also select a specific date range.
 
-![alt text](https://media.giphy.com/media/h7No5m3tAeV4Q/giphy.gif)
+![alt text](static/images/attempt2.gif)
 
 
 
 ## Visuals
 | Pictures        | Description             | Details  |
 | ------------- | :--------------------------| :-----------|
-|![alt text](static/images/bar1.JPG)| Top 5 Poll Winners With User Inputted Date Range |  Displays the top 5 winners along with their respective number of polls won across all polls in the selected date range. Users can also toggle between republican poll winners and democratic poll winners.  |
-|![Keyword Winners](static/images/bar2.JPG)| Percentage Share of Polling Choices|  Displays the top 5 winners along with their respective percentage of polling results across all polls in the selected date range. Users can also toggle between republican poll winners and democratic poll winners. |
+|![alt text](static/images/bar1.JPG)| Top 5 Poll Winners by Polls Won |  Displays the top 5 winners along with their respective number of polls won across all polls in the selected date range. Users can also toggle between republican poll winners and democratic poll winners.  |
+|![Keyword Winners](static/images/bar2.JPG)| Top 5 Poll Winners by Percentage Share |  Displays the top 5 winners along with their respective percentage of polling results across all polls in the selected date range. Users can also toggle between republican poll winners and democratic poll winners. |
 |![Keyword Winners](static/images/bar3.JPG)| Top 5 Keywords by Spend |  Displays the top 5 keywords across all recorded political advertisements with their respective spend in millions.  |
-|![alt text](static/images/map1.jpg "Poll Winners")| Poll Winners by State With User Inputted Date Range |  Displays the winner of the latest poll in each state within the selected date range.  |
-|![alt text](static/images/map2.jpg "State Party Identification")     | Political Party Identification by State                | Each state is classified as either strong democratic, lean democratic, strong republican, lean republican, or competitive meaning there is no clear political leaning for that state. |
-|![alt text](static/images/map3.jpg "Ad Targeting")    | Number of Targeted Advertisements by State | These are the number of ads that are targeted toward a specific audience in each state. Targeted characteristics include gender, age, and geographic area. |
-|![alt text](static/images/map4.jpg "Ad Spending") | Political Advertisement Spending by State    | How much is collectively spent on political advertising in each state.        |
+|![alt text](static/images/map1.JPG "Poll Winners")| Poll Winners by State |  Displays the winner of the latest poll in each state within the selected date range.  |
+|![alt text](static/images/map2.JPG "State Party Identification")     | Political Party Identification by State                | Each state is classified as either strong democratic, lean democratic, strong republican, lean republican, or competitive meaning there is no clear political leaning for that state. |
+|![alt text](static/images/map3.JPG "Ad Targeting")    | Number of Targeted Advertisements by State | These are the number of ads that are targeted toward a specific audience in each state. Targeted characteristics include gender, age, and geographic area. |
+|![alt text](static/images/map4.JPG "Ad Spending") | Political Advertisement Spending by State    | How much is collectively spent on political advertising in each state.        |
 
 ## How To Install
 
@@ -74,7 +76,7 @@ python app.py
 In Google Chrome (the one and only browser we tested on), open up a new window and go to localhost, post 3050.
 In our case the url is simply  http://127.0.0.1:3050/
 
-## Methodology & Motivation
+## Methodology And Motivation
 
 We first explored using Tableau as our visualization tool. Attracted by out-of-the-box visuals that are flexible and easily tailored to fit different data sets. As well as analysis capabilities that would help us blend different data sources and slice and dice our data quickly to explore many different views.
 
