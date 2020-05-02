@@ -183,23 +183,7 @@ def draw_polls_trace(myFig, data, polls_orgvotes_df,mycolorscale):
     myFig.update_traces(
     hoverinfo = 'text + name + location',
     hovertemplate = None)
-
-    #event_data4 = go.Choropleth(
-    #    autocolorscale=False,
-    #    #colorscale= 'agsunset',
-    #    colorscale = mycolorscale,
-    #    locations=polls_orgvotes_df['State'],  # DataFrame column with locations
-    #    text=  polls_orgvotes_df["candidate_name"] +"<br>Date:" + polls_orgvotes_df["Week String"] +"<br>Votes:"+ round(polls_orgvotes_df["Votes"],0).astype(str),
-    #    z=polls_orgvotes_df["Z Values"],
-    #    hoverinfo= 'location + text',
-    #    locationmode = 'USA-states', # Set to plot as US States
-    #    #visible=False,
-    #    showscale=False,
-    #    )
-
-
-    #data.append(event_data4)
-    #myFig.add_trace(event_data4)
+    myFig.update_layout(title= {'text':'Poll Winners by State During Date Range','x':0.5}, dragmode=False, geo_scope='usa',)
     return myFig,data
 
 def draw_loc_trace(myFig,data,loc_tbl):
@@ -223,19 +207,10 @@ def draw_loc_trace(myFig,data,loc_tbl):
         )
     #myFig.add_trace(event_data)
     #data.append(event_data)
-    myFig.update_layout(dragmode=False,geo_scope='usa')
+    myFig.update_layout(title= {'text':'Political Ad Spending by State in Millions','x':0.5}, dragmode=False, geo_scope='usa',)
     return myFig, data
 
 def draw_targ_trace(myFig,data,cleaned_pivot):
-    #event_data2 = go.Choropleth(
-    #    locations=cleaned_pivot.index,  # DataFrame column with locations
-    #    z=cleaned_pivot["Ads_List"],  # DataFrame column with color values
-    #    hoverinfo='location+z', # DataFrame column hover info
-    #    locationmode = 'USA-states',
-        #visible=False
-    #    )
-    #myFig.add_trace(event_data2)
-    #data.append(event_data2)
 
     cleaned_pivot = cleaned_pivot.rename(columns={"Ads_List":"Number of Ads"})
 
@@ -248,7 +223,7 @@ def draw_targ_trace(myFig,data,cleaned_pivot):
     myFig.update_traces(
     hoverinfo = 'location+text+name+z',
     hovertemplate = None)
-    myFig.update_layout(title= {'text':'Number of Targeted Ads'}, dragmode=False, geo_scope='usa',)
+    myFig.update_layout(title= {'text':'Number of Targeted Ads by State','x':0.5}, dragmode=False, geo_scope='usa',)
 
 
     return myFig, data
@@ -266,28 +241,7 @@ def draw_parties_trace(myFig,data,parties_df, zarray, SD_limit, LD_limit, C_limi
     myFig.update_traces(
     hoverinfo = 'text + name + location',
     hovertemplate = None)
-    #event_data3 = go.Choropleth(
-    #autocolorscale=False,
-    #colorscale=[[0.0, 'rgb(4,21,59)'],
-    #            [SD_limit - 0.05, 'rgb(4,21,59)'],
-    #            [SD_limit, 'rgb(139,195,236)'],
-    #            [LD_limit- 0.05, 'rgb(139,195,236)'],
-    #            [LD_limit , 'rgb(193,200,209)'],
-    #            [C_limit - 0.05, 'rgb(193,200,209)'],
-    #            [C_limit, 'rgb(247,190,192)'],
-    #            [LR_limit - 0.05, 'rgb(247,190,192)'],
-    #            [LR_limit + 0.05, 'rgb(206,0,0)'],
-    #            [SR_limit, 'rgb(206,0,0)']],
-    #locations=parties_df.index,  # DataFrame column with locations
-    #text= parties_df['Classification'],
-    #z= zarray,
-    #hoverinfo= 'text + z + location',
-    #locationmode = 'USA-states', # Set to plot as US States
-    #visible=False,
-    #showscale=False,
-    #)
-    #data.append(event_data3)
-    #myFig.add_trace(event_data3)
+    myFig.update_layout(title= {'text':'Political Affiliation by State','x':0.5}, dragmode=False, geo_scope='usa',)
     return myFig, data
 
 def map_layout():
