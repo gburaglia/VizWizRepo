@@ -2,16 +2,16 @@
 
 # Viz Wiz Contest Spring 2020
 
-This project is on Github:  https://github.com/gburaglia/VizWizRepo
+Please view this project on Github:  https://github.com/gburaglia/VizWizRepo
 
 Our goal was to develop a creative design using innovative visualization tools. We wanted to explore mediums we didn't have previous experience with to expand our boundaries and increase our knowledge.
 
 <p align="center">
   <a href="#data">Data</a> •
-  <a href="#using">How to Use</a> •
+  <a href="#how-to-use">How to Use</a> •
   <a href="#visuals">Visuals</a> •
-  <a href="#installing">How to Install</a> •
-  <a href="#methodology-&-methodology">Methodology & Motivation</a> •
+  <a href="#how-to-install">How to Install</a> •
+  <a href="#methodology-&-motivation">Methodology & Motivation</a> •
   <a href="#team-members">Team Members</a> •
   <a href="#future-work">Future Work</a> •
 
@@ -28,7 +28,7 @@ Google's [Political Advertising Transparency Report.](https://transparencyreport
 
 ## How To Use
 
-On first data visualization, use dropdown menu to change between "Poll Winners" and "Keywords". For "Poll Winners" user can also select a specific date range and toggle between "Democratic" and "Republican" poll winners.
+On first data visualization, use dropdown menu to change between "Poll Winners", "Poll Ratings", and "Keywords". For "Poll Winners" and "Poll Ratings" user can also select a specific date range and toggle between "Democratic" and "Republican" poll winners.
 
 Scroll down on page.
 
@@ -50,7 +50,7 @@ On second visualization, use dropdown menu to change between "Poll Winners", "St
 
 ## How To Install
 
-This is a lightweight app that is run using python.  We used python 3.6 for development, so we woudl encourage you to use the same.  For installation we recommend creating a virutal environement and installing the python packages using the requirements.txt file.
+This is a lightweight app that is run using python.  We used python 3.6 for development, so we would encourage you to use the same.  For installation we recommend creating a virtual environment and installing the python packages using the requirements.txt file.
 You can create an environment using an Anaconda Prompt:
 ```
 conda create -n myenv python=3.6
@@ -70,7 +70,7 @@ Typically shown as:
 python app.py
 ```
 
-In Google Chrome (the one and only brower we tested on), open up a new window and go to localhost, post 3050.
+In Google Chrome (the one and only browser we tested on), open up a new window and go to localhost, post 3050.
 In our case the url is simply  http://127.0.0.1:3050/
 
 ## Methodology & Motivation
