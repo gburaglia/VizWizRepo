@@ -233,4 +233,4 @@ def update_bar(input_value,start_date,end_date,poll_type=None):
     return numbers[3],numbers[1],numbers[0],numbers[2],numbers[4], start_date_b, end_date_b, names[3], names[1], names[0], names[2], names[4], title
 
 if __name__ == '__main__':
-    app.run_server(debug=True,port=3050)
+    app.run_server(debug=True)
