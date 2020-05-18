@@ -27,6 +27,7 @@ polls_max_filtered_df, polls_orgvotes_df = build_polls(polls_df,start_date,end_d
 
 external_stylesheets=["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+server = app.server
 
 app.index_string = '''
 <!DOCTYPE html>
